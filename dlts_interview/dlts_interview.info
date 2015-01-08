@@ -1,0 +1,10 @@
+name = DLTS Interview
+description = Interview template functions for Flowplayer.
+package = DLTS
+core = 7.x
+version = 7.x-dev
+dependencies[] = libraries
+dependencies[] = references
+dependencies[] = dlts_playable_bitstreams
+dependencies[] = dlts_bitstream
+configure = admin/config/bitstream/flowplayer

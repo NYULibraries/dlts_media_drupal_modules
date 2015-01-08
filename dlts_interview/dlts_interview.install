@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the block_example module.
+ */
+
+function dlts_interview_requirements( $phase ) {
+
+  $requirements = array();
+ 
+  // Why this function is not available at install phase ?
+  
+  if ( !function_exists('dlts_interview_available_flowplayer_plugins_flash') ) {
+    return $requirements;
+  }
+  
+  // Ensure translations don't break at install time
+  $t = get_t();
+  
+  $flowplayer_plugins = implode(', ', array_keys ( (array) dlts_interview_available_flowplayer_plugins_flash() ) );
+  
+  if ( $phase == 'runtime' ) {
+    $requirements['dlts_interview'] = array(
+      'title' => $t('Flowplayer flash plugins'), 
+      'value' => ( !empty( $flowplayer_plugins ) ? $flowplayer_plugins : 'No plugins available' ),
+      'severity' => REQUIREMENT_INFO,
+    );
+  }
+  
+  return $requirements;
+}
+
+function dlts_interview_enable() {
+  drupal_set_message( t( 'DLTS Bitstream Enable, <a href="@config">Configure</a>.... ', array('@config' => url('admin/config/bitstream/flowplayer') ) ) ); // Needs a better language
+}
+
+function dlts_interview_uninstall() {
+  variable_del('dlts_bitstream_globals_flowplayer');
+  variable_del('dlts_bitstream_flowplayer_plugins_audio');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls');
+  variable_del('dlts_bitstream_flowplayer_plugins_rtmp');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_bitrateProfileName');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_checkOnStart');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_dynamic');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_dynamicBuffer');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_live');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_netConnectionUrl');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_rememberBitrate');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_serverType');
+  variable_del('dlts_bitstream_flowplayer_plugins_bwcheck_switchOnFullscreen');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_autoHide');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_play');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_volume');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_mute');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_time');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_stop');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_playlist');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_fastBackward');
+  variable_del('dlts_bitstream_flowplayer_plugins_controls_fastForward');
+  variable_del('dlts_bitstream_flowplayer_plugins_rtmp_netConnectionUrl');
+  variable_del('dlts_bitstream_flowplayer_plugins_rtmp_objectEncoding');
+  variable_del('dlts_bitstream_flowplayer_plugins_rtmp_proxyType');
+  variable_del('dlts_bitstream_flowplayer_clip_accelerated');
+  variable_del('dlts_bitstream_flowplayer_clip_autoBuffering');
+  variable_del('dlts_bitstream_flowplayer_clip_autoPlay');
+  variable_del('dlts_bitstream_flowplayer_clip_baseUrl');
+  variable_del('dlts_bitstream_flowplayer_clip_bufferLength');
+  variable_del('dlts_bitstream_flowplayer_clip_cuepointMultiplier');
+  variable_del('dlts_bitstream_flowplayer_clip_duration');
+  variable_del('dlts_bitstream_flowplayer_clip_fadeInSpeed');
+  variable_del('dlts_bitstream_flowplayer_clip_fadeOutSpeed');
+  variable_del('dlts_bitstream_flowplayer_clip_live');
+  variable_del('dlts_bitstream_flowplayer_clip_provider');
+  variable_del('dlts_bitstream_flowplayer_clip_bitrate');
+  variable_del('dlts_bitstream_flowplayer_clip_scaling');
+  variable_del('dlts_bitstream_flowplayer_clip_start');
+}
