@@ -1,0 +1,9 @@
+name = DLTS Bitstream
+description = Structured data about media bitstreams.
+core = 7.x
+package = Fields
+
+dependencies[] = libraries
+
+files[] = dlts_bitstream.module
+files[] = dlts_bitstream.install
