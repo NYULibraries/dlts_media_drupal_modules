@@ -5,12 +5,12 @@
  */
 
 /**
- * Implementation of hook_field_default_fields().
+ * Implements hook_field_default_fields().
  */
 function dlts_playable_bitstreams_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-dlts_bitstream_set-field_bitstream'
+  // Exported field: 'node-dlts_bitstream_set-field_bitstream'.
   $fields['node-dlts_bitstream_set-field_bitstream'] = array(
     'field_config' => array(
       'active' => '1',
@@ -20,6 +20,7 @@ function dlts_playable_bitstreams_field_default_fields() {
       'field_name' => 'field_bitstream',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'dlts_bitstream',
       'settings' => array(),
       'translatable' => '1',
@@ -62,7 +63,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_bitstream_set-field_contact_sheet'
+  // Exported field: 'node-dlts_bitstream_set-field_contact_sheet'.
   $fields['node-dlts_bitstream_set-field_contact_sheet'] = array(
     'field_config' => array(
       'active' => '1',
@@ -83,6 +84,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'image',
       'settings' => array(
         'default_image' => 0,
@@ -119,6 +121,7 @@ function dlts_playable_bitstreams_field_default_fields() {
       'required' => 0,
       'settings' => array(
         'alt_field' => 0,
+        'default_image' => 0,
         'file_directory' => 'contact_sheets',
         'file_extensions' => 'png gif jpg jpeg tif tiff',
         'max_filesize' => '',
@@ -140,7 +143,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_bitstream_set-field_duration'
+  // Exported field: 'node-dlts_bitstream_set-field_duration'.
   $fields['node-dlts_bitstream_set-field_duration'] = array(
     'field_config' => array(
       'active' => '1',
@@ -150,6 +153,7 @@ function dlts_playable_bitstreams_field_default_fields() {
       'field_name' => 'field_duration',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(
         'decimal_separator' => '.',
@@ -209,7 +213,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_bitstream_set-field_identifier'
+  // Exported field: 'node-dlts_bitstream_set-field_identifier'.
   $fields['node-dlts_bitstream_set-field_identifier'] = array(
     'field_config' => array(
       'active' => '1',
@@ -230,6 +234,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -277,7 +282,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_bitstream_set-field_rights'
+  // Exported field: 'node-dlts_bitstream_set-field_rights'.
   $fields['node-dlts_bitstream_set-field_rights'] = array(
     'field_config' => array(
       'active' => '1',
@@ -298,6 +303,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(),
       'translatable' => '1',
@@ -343,7 +349,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_bitstream_set-field_transcript'
+  // Exported field: 'node-dlts_bitstream_set-field_transcript'.
   $fields['node-dlts_bitstream_set-field_transcript'] = array(
     'field_config' => array(
       'active' => '1',
@@ -364,6 +370,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -415,7 +422,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_clip-field_bitstream_ref'
+  // Exported field: 'node-dlts_clip-field_bitstream_ref'.
   $fields['node-dlts_clip-field_bitstream_ref'] = array(
     'field_config' => array(
       'active' => '1',
@@ -436,6 +443,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'nid',
         ),
       ),
+      'locked' => '0',
       'module' => 'node_reference',
       'settings' => array(
         'referenceable_types' => array(
@@ -445,6 +453,11 @@ function dlts_playable_bitstreams_field_default_fields() {
           'dlts_playlist' => 0,
           'page' => 0,
           'rosie_interview' => 0,
+        ),
+        'view' => array(
+          'args' => array(),
+          'display_name' => '',
+          'view_name' => '',
         ),
       ),
       'translatable' => '1',
@@ -487,7 +500,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_clip-field_duration'
+  // Exported field: 'node-dlts_clip-field_duration'.
   $fields['node-dlts_clip-field_duration'] = array(
     'field_config' => array(
       'active' => '1',
@@ -497,6 +510,7 @@ function dlts_playable_bitstreams_field_default_fields() {
       'field_name' => 'field_duration',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(
         'decimal_separator' => '.',
@@ -556,7 +570,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_clip-field_identifier'
+  // Exported field: 'node-dlts_clip-field_identifier'.
   $fields['node-dlts_clip-field_identifier'] = array(
     'field_config' => array(
       'active' => '1',
@@ -577,6 +591,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -624,7 +639,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_clip-field_start'
+  // Exported field: 'node-dlts_clip-field_start'.
   $fields['node-dlts_clip-field_start'] = array(
     'field_config' => array(
       'active' => '1',
@@ -634,6 +649,7 @@ function dlts_playable_bitstreams_field_default_fields() {
       'field_name' => 'field_start',
       'foreign keys' => array(),
       'indexes' => array(),
+      'locked' => '0',
       'module' => 'number',
       'settings' => array(
         'decimal_separator' => '.',
@@ -693,7 +709,504 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_playlist-field_clip_ref'
+  // Exported field: 'node-dlts_collection-field_code'.
+  $fields['node-dlts_collection-field_code'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_code',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_collection',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 1,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_code',
+      'label' => 'Code',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '3',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_collection-field_identifier'.
+  $fields['node-dlts_collection-field_identifier'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_identifier',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '1',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_collection',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 3,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_identifier',
+      'label' => 'Identifier',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '2',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_collection-field_name'.
+  $fields['node-dlts_collection-field_name'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_name',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_collection',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_name',
+      'label' => 'Name',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '4',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_collection-field_partner'.
+  $fields['node-dlts_collection-field_partner'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_partner',
+      'foreign keys' => array(
+        'nid' => array(
+          'columns' => array(
+            'nid' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'nid' => array(
+          0 => 'nid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'node_reference',
+      'settings' => array(
+        'referenceable_types' => array(
+          'article' => 0,
+          'dlts_bitstream_set' => 0,
+          'dlts_clip' => 0,
+          'dlts_collection' => 0,
+          'dlts_partner' => 'dlts_partner',
+          'dlts_playlist' => 0,
+          'page' => 0,
+        ),
+        'view' => array(
+          'args' => array(),
+          'display_name' => '',
+          'view_name' => '',
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'node_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_collection',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'node_reference',
+          'settings' => array(),
+          'type' => 'node_reference_default',
+          'weight' => 2,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_partner',
+      'label' => 'Partner',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'node_reference',
+        'settings' => array(
+          'autocomplete_match' => 'contains',
+          'autocomplete_path' => 'node_reference/autocomplete',
+          'size' => '60',
+        ),
+        'type' => 'node_reference_autocomplete',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_partner-field_code'.
+  $fields['node-dlts_partner-field_code'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_code',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_partner',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 2,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_code',
+      'label' => 'Code',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '35',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_partner-field_identifier'.
+  $fields['node-dlts_partner-field_identifier'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_identifier',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '1',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_partner',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 1,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_identifier',
+      'label' => 'Identifier',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '33',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_partner-field_name'.
+  $fields['node-dlts_partner-field_name'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_name',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dlts_partner',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 3,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_name',
+      'label' => 'Name',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '37',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dlts_playlist-field_clip_ref'.
   $fields['node-dlts_playlist-field_clip_ref'] = array(
     'field_config' => array(
       'active' => '1',
@@ -714,6 +1227,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'nid',
         ),
       ),
+      'locked' => '0',
       'module' => 'node_reference',
       'settings' => array(
         'referenceable_types' => array(
@@ -723,6 +1237,11 @@ function dlts_playable_bitstreams_field_default_fields() {
           'dlts_playlist' => 0,
           'page' => 0,
           'rosie_interview' => 0,
+        ),
+        'view' => array(
+          'args' => array(),
+          'display_name' => '',
+          'view_name' => '',
         ),
       ),
       'translatable' => '1',
@@ -769,7 +1288,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_playlist-field_identifier'
+  // Exported field: 'node-dlts_playlist-field_identifier'.
   $fields['node-dlts_playlist-field_identifier'] = array(
     'field_config' => array(
       'active' => '1',
@@ -790,6 +1309,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'format',
         ),
       ),
+      'locked' => '0',
       'module' => 'text',
       'settings' => array(
         'max_length' => '255',
@@ -837,7 +1357,7 @@ function dlts_playable_bitstreams_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-dlts_playlist-field_transcript'
+  // Exported field: 'node-dlts_playlist-field_transcript'.
   $fields['node-dlts_playlist-field_transcript'] = array(
     'field_config' => array(
       'active' => '1',
@@ -858,6 +1378,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           0 => 'fid',
         ),
       ),
+      'locked' => '0',
       'module' => 'file',
       'settings' => array(
         'display_default' => 0,
@@ -916,11 +1437,14 @@ function dlts_playable_bitstreams_field_default_fields() {
   t('Bitstream');
   t('Bitstream Reference');
   t('Clip');
+  t('Code');
   t('Contact Sheet');
   t('Duration');
   t('Identifier');
   t('Identifier for clip.');
   t('Identifier of the Clip.');
+  t('Name');
+  t('Partner');
   t('Play Duration');
   t('Play Start');
   t('Rights');
