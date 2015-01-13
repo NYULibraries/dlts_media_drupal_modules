@@ -1,8 +1,5 @@
 <?php
 
-// http://popcornjs.org/
-
-
 /**
  * @file
  */
@@ -12,14 +9,6 @@
  */
 defined('DLTS_INTERVIEW_PATH') or define('DLTS_INTERVIEW_PATH', drupal_get_path( 'module', 'dlts_interview') );
 
-function dlts_interview_init( ) {
-
-  // require_once( DLTS_INTERVIEW_PATH . '/inc/flowplayer.inc' );
-
-  // dpm ( dlts_interview_flowplayer_available_flowplayer_javascript_api() );
-
-}
-
 /**
  * Implement of hook_help().
  */
@@ -27,8 +16,7 @@ function dlts_interview_help( $path, $arg ) {
   switch ( $path ) {
     case 'admin/help#dlts_interview':
       $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Bitstream handling settings') . '</p>';
+      $output .= '<h3>' . t('Bitstream') . '</h3>';
       return $output;
   }
 }
@@ -97,37 +85,50 @@ function dlts_interview_theme() {
  */
 function dlts_interview_node_view( $node, $view_mode = 'full', $langcode = NULL ) {
 
-  if ( preg_match( '/interview|clip/', $node->type, $matches ) && $view_mode == 'full' ) {
-    if ( isset($node->field_playlist_ref) || isset($node->field_bitstream_ref) ) {
-      require_once( DLTS_INTERVIEW_PATH . '/inc/flowplayer.inc' );
+  if (
+	isset($node->field_playlist_ref)  // a playlist with a clip reference
+	||
+	isset($node->field_bitstream_ref) // a clip reference witha a bitstream reference
+	||
+	isset($node->field_bitstream) // a bitstream
+  ) {
 
-	  $player = dlts_interview_flowplayer_view( $node, $matches[0] );
+    $detect = mobile_detect_get_object();
 
-      if ($player) {
+    $is_mobile = $detect->isMobile();
 
-        if ($player['is_mobile'] || $player['is_tablet']) {
-          $node->content['dlts_interview_player_flowplayer'] = array(
-            '#markup' => theme('dlts_interview_html_player', $player),
-            '#weight' => -1,
-          );
-        }
-        elseif (!$player['is_mobile'] || !$player['is_tablet']) {
-          $node->content['dlts_interview_player_flowplayer'] = array(
-            '#markup' => theme( 'dlts_interview_player_flowplayer_js', $player ),
-            '#weight' => -1,
-          );
-        }
-      }
+    $is_tablet = $detect->isTablet();
 
-      else {
-        $node->content['dlts_interview_player_flowplayer'] = array(
-          '#markup' => theme( 'dlts_interview_error', array('msg' => t('Unable to initiate Flowplayer.') ) ),
-          '#weight' => -1,
-        );
-      }
+    if ( $is_mobile || $is_tablet ) {
+
+      drupal_set_message('HTML video for you', 'status');
+
+      //$markup = theme('dlts_interview_html_player', array());
 
     }
+
+    elseif ( !$is_tablet && !$is_mobile ) {
+
+      module_load_include('inc', 'dlts_interview', 'inc/flowplayer');
+
+      preg_match( '/interview|clip|bitstream_set/', $node->type, $matches );
+
+      $player = dlts_interview_flowplayer( $node, $matches[0] );
+
+      $markup = theme('dlts_interview_player_flowplayer_js', $player);
+
+    }
+
+    else {
+
+      $markup = theme('dlts_interview_error', array( 'msg' => t('Unable to initiate Flowplayer.') ) );
+
+    }
+
+    $node->content['dlts_interview_player_flowplayer'] = array( '#markup' => $markup, '#weight' => -1 );
+
   }
+
 }
 
 /**

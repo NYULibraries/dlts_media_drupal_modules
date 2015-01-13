@@ -1,6 +1,6 @@
 <?php
 
-function dlts_interview_flowplayer_view( $vars, $type ) {
+function dlts_interview_flowplayer( $vars, $type ) {
 
   $detect = mobile_detect_get_object();
 
@@ -8,33 +8,18 @@ function dlts_interview_flowplayer_view( $vars, $type ) {
 
   $is_tablet = $detect->isTablet();
 
-  if ($is_mobile || $is_tablet) {
-	drupal_set_message('HTML video for you', 'status');
-  }
-
-  elseif (!$is_tablet && !$is_mobile) {
-	drupal_set_message('Flowplayer for you', 'status');
-  }
-
-  /*
+  /**
    * Flowplayer skeleton and reference
    */
   $setup = unserialize( variable_get( 'dlts_bitstream_globals_flowplayer', FALSE ) );
 
-  if (!$setup) {
-    watchdog( 'dlts_interview', t('Unable to initiate Flowplayer. Please visit Bitstream handling settings for Flowplayer'), array(), WATCHDOG_ALERT );
+  if ( !$setup ) {
+    watchdog('dlts_interview', t('Unable to initiate Flowplayer. Please visit Bitstream handling settings for Flowplayer'), array(), WATCHDOG_ALERT );
+    drupal_set_message( t('Unable to initiate Flowplayer.'), 'warning' );
     return FALSE;
   }
 
-  /*
-   * Playlist "init"
-   */
-
-  $setup += array(
-    'playlist' => array(),
-    'is_mobile' => $is_mobile,
-    'is_tablet' => $is_tablet,
-  );
+  $setup += array( 'playlist' => array(), 'is_mobile' => $is_mobile, 'is_tablet' => $is_tablet );
 
   /*
    * Node logic follows
@@ -45,6 +30,9 @@ function dlts_interview_flowplayer_view( $vars, $type ) {
       break;
     case 'interview' :
       _dlts_interview_type_dlts_playlist_field_playlist_ref( $vars, $setup );
+      break;
+    case 'bitstream_set' :
+      _dlts_interview_type_dlts_bitstream_set_field_bitstream( $vars, $setup );
       break;
     default :
       return FALSE;
@@ -102,6 +90,26 @@ function _dlts_interview_type_dlts_playlist_field_clip_ref( $entity, &$setup ) {
 function _dlts_interview_type_dlts_playlist_field_playlist_ref( $entity, &$setup ) {
   foreach ( (array) dlts_interview_field_get_items( $entity, 'field_playlist_ref' ) as $playlist  ) {
     _dlts_interview_type_dlts_playlist_field_clip_ref( node_load( $playlist['nid'] ), $setup );
+  }
+}
+
+function _dlts_interview_type_dlts_bitstream_set_field_bitstream( $entity, &$setup ) {
+  foreach ( (array) dlts_interview_field_get_items( $entity, 'field_bitstream' ) as $index => $bitstream  ) {
+
+    if ( !isset( $setup['playlist'][$index]['type'] ) ) {
+  	  $setup['playlist'][$index]['type'] = dlts_interview_get_media_type( $bitstream );
+  	}
+
+  	$setup['playlist'][$index]['bitrates'][] = _dlts_interview_bitrates( $bitstream, $setup, $index );
+
+  	$setup['playlist'][$index]['start'] = 0;
+
+  	$setup['playlist'][$index]['duration'] = ( ( $duration = dlts_interview_field_get_item_value( $entity, 'field_duration' ) ) ? $duration : 0 );
+
+  	$setup['playlist'][$index]['title'] = $entity->title;
+
+  	_dlts_interview_resolver( $setup, $index );
+
   }
 }
 
