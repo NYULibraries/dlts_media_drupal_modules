@@ -1,17 +1,27 @@
 (function ($, $f) {
   Drupal.behaviors.dlts_interview = {
     attach: function( context, settings ) {	  
-	  if ( flashembed.isSupported([9, 115]) ) {	  
+	  
+      // if ( flashembed.isSupported([9, 115]) ) {
+    	
+    	console.log ( settings.dlts.interview )
+		  
         $.each( settings.dlts.interview.streams, function( index, stream ) {
-          $f( stream.id, settings.dlts.interview.player.url, {
-            key: settings.dlts.interview.player.key || false,
-            playlist: stream.playlist || false,
-            plugins : settings.dlts.interview.player.plugins || false
-          });
+        	
+        $f( stream.id, settings.dlts.interview.player.url, {
+              key: settings.dlts.interview.player.key || false,
+              playlist: stream.playlist || false,
+              plugins : settings.dlts.interview.player.plugins || false
+        })
+          
 	    });
-	  } else {
-        $('.player.flowplayer').html(settings.dlts.interview.player.flash.errorMessage);
-	  }
+	  
+      //}
+	  
+	  //else {
+        //$('.player.flowplayer').html(settings.dlts.interview.player.flash.errorMessage);
+	  //}
+	  
     }
   };
 })(jQuery, flowplayer);

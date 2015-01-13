@@ -1,8 +1,14 @@
 <?php
 
-require_once( DLTS_INTERVIEW_PATH . '/inc/utilities.inc' );
-
 function dlts_interview_player_flowplayer_config($form, &$form_state) {
+
+  module_load_include('inc', 'dlts_interview', 'inc/flowplayer');
+
+  $isCommercial = FALSE;
+
+  $versions = array();
+
+  $flowplayer_javascript_api = array();
 
   /*
    * Enable/disable plugins
@@ -42,14 +48,14 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
     '#collapsible' => FALSE,
   );
 
-  $isCommercial = FALSE;
-  $versions = $flowplayer_javascript_api = array();
-
   $selected_flowplayer_version = variable_get( 'dlts_bitstream_flowplayer_version', FALSE );
+
   $selected_flowplayer_javascript_api = variable_get( 'dlts_bitstream_flowplayer_js_api', FALSE );
 
-  foreach( (array) dlts_interview_flowplayer_available_flowplayer() as $flowplayer => $value ) {
-    $versions += array( $value['url'] => $flowplayer);
+  foreach ( (array) dlts_interview_flowplayer_available_flowplayer() as $value ) {
+
+    $versions += array( $value['url'] => $value['filename']);
+
     if (  $value['type'] == 'commercial' && ( $value['url'] == $selected_flowplayer_version ) ) {
       $isCommercial = TRUE;
     }
