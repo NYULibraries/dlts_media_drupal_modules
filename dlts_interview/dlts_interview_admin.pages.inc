@@ -28,6 +28,7 @@ function dlts_interview_default_flowplayer_configuration () {
     'player' => array(
       'version' => FALSE,
       'js_api' => FALSE,
+      'url' => '',
       'commercial_key' => '',
       'flash' => array(
         'disableError' => dlts_interview_default_flash_disable_error(),
@@ -39,7 +40,7 @@ function dlts_interview_default_flowplayer_configuration () {
         ),
         'bwcheck' => array(
           'enabled' => FALSE,
-          'bitrate_profile_name' => 'RTMPBitrateProfile',
+          'bitrateProfileName' => 'RTMPBitrateProfile',
           'checkOnStart' => TRUE,
           'dynamic' => FALSE,
           'dynamicBuffer' => FALSE,
@@ -106,24 +107,24 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
 
   $flowplayer_javascript_api = array();
 
-  $selected_flowplayer_version = variable_get( 'dlts_bitstream_flowplayer_version', FALSE );
-
-  $selected_flowplayer_javascript_api = variable_get( 'dlts_bitstream_flowplayer_js_api', FALSE );
-
-  $config = unserialize( variable_get( 'dlts_bitstream_globals_flowplayer') );
-
   $default = dlts_interview_default_flowplayer_configuration();
 
-  foreach ( (array) dlts_interview_flowplayer_available_flowplayer() as $value ) {
+  $saved_config = variable_get( 'dlts_bitstream_globals_flowplayer');
+
+  $config = unserialize ( $saved_config );
+
+  $selected_flowplayer_version = ( isset( $config['flowplayer']['player']['version'])) ? $config['flowplayer']['player']['version'] : $default['flowplayer']['player']['version'];
+
+  $selected_flowplayer_javascript_api = ( isset( $config['flowplayer']['player']['js_api'])) ? $config['flowplayer']['player']['js_api'] : $default['flowplayer']['player']['js_api'];
+
+  foreach ( dlts_interview_flowplayer_available_flowplayer() as $value ) {
     $versions += array( $value['url'] => $value['filename']);
   	if (  $value['type'] == 'commercial' && ( $value['url'] == $selected_flowplayer_version ) ) $isCommercial = TRUE;
   }
 
-  foreach( (array) dlts_interview_flowplayer_available_flowplayer_javascript_api() as $file => $value ) {
-  	$flowplayer_javascript_api += array( $value['url'] => $file );
-  }
+  foreach ( dlts_interview_flowplayer_available_flowplayer_javascript_api() as $file => $value ) $flowplayer_javascript_api += array ( $value['url'] => $file );
 
-  $form['dlts_bitstream_globals_flowplayer'] = array('#type' => 'hidden', '#value' => variable_get( 'dlts_bitstream_globals_flowplayer') );
+  $form['dlts_bitstream_globals_flowplayer'] = array('#type' => 'hidden', '#value' => $saved_config );
 
   $form['flowplayer'] = array(
     '#type' => 'fieldset',
@@ -209,7 +210,7 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
   $form['bwcheck']['dlts_bitstream_flowplayer_plugins_bwcheck_bitrateProfileName'] = array(
     '#type' => 'textfield',
     '#title' => t('Bitrate Profile Name'),
-    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['bitrate_profile_name'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['bitrate_profile_name'] : $default['flowplayer']['player']['plugins']['bwcheck']['bitrate_profile_name'],
+    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['bitrateProfileName'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['bitrateProfileName'] : $default['flowplayer']['player']['plugins']['bwcheck']['bitrateProfileName'],
     '#size' => 20,
     '#maxlength' => 100,
     '#description' => t('Used when detected bandwidth values are remembered (see the rememberBitrate setting). This is the name of the Shared Object where the bitrates are saved. You might want to change this if you have different sets of files and you want to keep the detected bandwidths separate for those sets.'),
@@ -270,7 +271,7 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
   $form['bwcheck']['dlts_bitstream_flowplayer_plugins_bwcheck_switchOnFullscreen'] = array(
     '#type' => 'checkbox',
     '#title' => t('Switch on Fullscreen'),
-    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['hdButton'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['hdButton'] : $default['flowplayer']['player']['plugins']['bwcheck']['hdButton'],
+    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'] : $default['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'],
     '#description' => t('Used when dynamic is set to false. Causes a bandwidth check and a switch when entering fullscreen or exiting fullscreen. When dynamic is set to true the plugin is doing QoS monitoring and switching dynamically if needed, also taking care the screen resize that happens with fullscreen mode.'),
   );
 
@@ -278,7 +279,7 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('HD Button'),
     '#options' => array('dock' => 'dock', 'controls' => 'controls', 'both' => 'both'),
-    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'] : $default['flowplayer']['player']['plugins']['bwcheck']['switchOnFullscreen'],
+    '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['hdButton'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['hdButton'] : $default['flowplayer']['player']['plugins']['bwcheck']['hdButton'],
     '#description' => t('Should the HD selection button be visible?.'),
   );
 
@@ -574,6 +575,10 @@ function dlts_interview_player_flowplayer_config_validate($form, &$form_state) {
     $config['player']['key'] = $form_state['values']['dlts_bitstream_flowplayer_commercial_key'];
   }
 
+  if ( !empty( $form_state['values']['dlts_bitstream_flowplayer_version'] ) ) {
+  	$config['player']['version'] = $form_state['values']['dlts_bitstream_flowplayer_version'];
+  }
+
   if ( !empty( $form_state['values']['dlts_bitstream_flowplayer_js_api'] ) ) {
     $config['player']['js_api'] = $form_state['values']['dlts_bitstream_flowplayer_js_api'];
   }
@@ -585,28 +590,26 @@ function dlts_interview_player_flowplayer_config_validate($form, &$form_state) {
 
   foreach ( $form_state['values'] as $key => $value ) {
 
-  	/** Plugin enabled? */
-  	if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)$/', $key, $plugin ) && $value ) $config['player']['plugins'][$plugin[1]]['enabled'] = TRUE;
+    /** Plugin enabled? */
+    if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)$/', $key, $plugin ) && $value ) $config['player']['plugins'][$plugin[1]]['enabled'] = TRUE;
 
-    /** Plugins */
+  	/** Plugins */
     if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)_([a-zA-Z]*)$/', $key, $matches ) ) {
 
-      if ( isset( $form_state['values']['dlts_bitstream_flowplayer_plugins_' . $matches[1] ] ) && $form_state['values']['dlts_bitstream_flowplayer_plugins_' . $matches[1]] == TRUE ) {
+      /**
+       * Plug-ins don't live in the same location as the JS caller, we need to provide the
+       * URL parameter for each plugin.
+       */
+      if ( !isset ( $config['player']['plugins'][$matches[1]] ) ) $config['player']['plugins'][$matches[1]]['url'] = $available_flow_plugins_flash[$matches[1]];
 
-        /**
-         * Plug-ins don't live in the same location as the JS caller, we need to provide the
-         * URL parameter for each plugin.
-         */
-        if ( !isset( $config['player']['plugins'][$matches[1]] ) ) $config['player']['plugins'][$matches[1]]['url'] = $available_flow_plugins_flash[$matches[1]];
+      /**
+       * Config as pair of keys and values:
+       *   $matches[1] = plugin name
+       *   $matches[2] = plugin parameter
+       *   $value = parameter value
+       */
+      $config['player']['plugins'][$matches[1]][$matches[2]] = $value;
 
-        /**
-         * Config as pair of keys and values:
-         *   $matches[1] = plugin name
-         *   $matches[2] = plugin parameter
-         *   $value = parameter value
-         */
-      	$config['player']['plugins'][$matches[1]][$matches[2]] = $value;
-      }
     }
 
     /** Clip */
