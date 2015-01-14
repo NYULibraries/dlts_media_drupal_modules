@@ -88,7 +88,7 @@ function dlts_interview_node_view( $node, $view_mode = 'full', $langcode = NULL 
   if (
 	isset($node->field_playlist_ref)  // a playlist with a clip reference
 	||
-	isset($node->field_bitstream_ref) // a clip reference witha a bitstream reference
+	isset($node->field_bitstream_ref) // a clip reference with a bitstream reference
 	||
 	isset($node->field_bitstream) // a bitstream
   ) {
@@ -103,7 +103,7 @@ function dlts_interview_node_view( $node, $view_mode = 'full', $langcode = NULL 
 
       drupal_set_message('HTML video for you', 'status');
 
-      //$markup = theme('dlts_interview_html_player', array());
+      // $markup = theme('dlts_interview_html_player', array());
 
     }
 
