@@ -1,20 +1,18 @@
-(function ($, $f) {
+(function ($, flowplayer) {
+
   Drupal.behaviors.dlts_interview = {
     attach: function( context, settings ) {	  
 	  
       // if ( flashembed.isSupported([9, 115]) ) {
     	
-    	console.log ( settings.dlts.interview )
-		  
-        $.each( settings.dlts.interview.streams, function( index, stream ) {
+        $.each( settings.dlts.interview.streams, function ( index, stream ) {
         	
-        $f( stream.id, settings.dlts.interview.player.url, {
-              key: settings.dlts.interview.player.key || false,
-              playlist: stream.playlist || false,
-              plugins : settings.dlts.interview.player.plugins || false
-        })
-          
-	    });
+          flowplayer( stream.id, settings.dlts.interview.player.url, {
+            key: settings.dlts.interview.player.key || false,
+            playlist: stream.playlist || false,
+            plugins : settings.dlts.interview.player.plugins || false
+          });
+        });
 	  
       //}
 	  
@@ -23,5 +21,6 @@
 	  //}
 	  
     }
-  };
+  }
+
 })(jQuery, flowplayer);

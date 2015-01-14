@@ -12,11 +12,11 @@ function dlts_interview_default_flash_error() {
 
 function dlts_interview_default_flash_disable_error() {
 
-	$output = '<h2>' . t('Flash version 9,0 or greater is required</h2>') .
-	'<h3>' . t('You have no flash plugin installed') . '</h3>' .
-	'<p>'  . t('Download latest version from <a href="@adobe">here</a>', array( '@adobe' => 'http://www.adobe.com/go/getflashplayer') ) . '</p>';
+  $output = '<h2>' . t('Flash version 9,0 or greater is required</h2>') .
+	        '<h3>' . t('You have no flash plugin installed') . '</h3>' .
+	        '<p>'  . t('Download latest version from <a href="@adobe">here</a>', array( '@adobe' => 'http://www.adobe.com/go/getflashplayer') ) . '</p>';
 
-	return $output;
+  return $output;
 
 }
 
@@ -25,22 +25,6 @@ function dlts_interview_default_flowplayer_configuration () {
   $default = array();
 
   $default['flowplayer'] = array(
-  	'clip' => array(
-      'accelerated' => FALSE,
-      'autoBuffering' => FALSE,
-      'autoPlay' => TRUE,
-      'baseUrl' => '',
-      'bufferLength' => 3,
-      'cuepointMultiplier' => 1000,
-      'start' => 0,
-      'duration' => 0,
-      'fadeInSpeed' => 1000,
-      'fadeOutSpeed' => 1000,
-      'live' => FALSE,
-      'provider' => 'rtmp',
-      'bitrate' => 800,
-      'scaling' => 'fit',
-    ),
     'player' => array(
       'version' => FALSE,
       'js_api' => FALSE,
@@ -86,6 +70,22 @@ function dlts_interview_default_flowplayer_configuration () {
         ),
       ),
     ),
+    'clip' => array(
+      'accelerated' => FALSE,
+      'autoBuffering' => FALSE,
+      'autoPlay' => TRUE,
+      'baseUrl' => '',
+      'bufferLength' => 3,
+      'cuepointMultiplier' => 1000,
+      'start' => 0,
+      'duration' => 0,
+      'fadeInSpeed' => 1000,
+      'fadeOutSpeed' => 1000,
+      'live' => FALSE,
+      'provider' => 'rtmp',
+      'bitrate' => 800,
+      'scaling' => 'fit',
+    ),
   );
 
   return $default;
@@ -110,12 +110,9 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
 
   $selected_flowplayer_javascript_api = variable_get( 'dlts_bitstream_flowplayer_js_api', FALSE );
 
-  $config = array ( 'flowplayer' => unserialize( variable_get( 'dlts_bitstream_globals_flowplayer') ) );
+  $config = unserialize( variable_get( 'dlts_bitstream_globals_flowplayer') );
 
   $default = dlts_interview_default_flowplayer_configuration();
-
-  dpm ( $config );
-  dpm ( $default );
 
   foreach ( (array) dlts_interview_flowplayer_available_flowplayer() as $value ) {
     $versions += array( $value['url'] => $value['filename']);
@@ -128,23 +125,9 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
 
   $form['dlts_bitstream_globals_flowplayer'] = array('#type' => 'hidden', '#value' => variable_get( 'dlts_bitstream_globals_flowplayer') );
 
-  $form['flash'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Flash settings'),
-    '#collapsed' => FALSE,
-    '#collapsible' => FALSE,
-  );
-
-  $form['flash']['dlts_bitstream_flash_disableError'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Flash disable error message'),
-    '#default_value' => variable_get( 'dlts_bitstream_flash_disableError', dlts_interview_default_flash_disable_error() ),
-    '#description' => t('Error message to be display when Flash plugin is disable or installed.'),
-  );
-
   $form['flowplayer'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Flowplayer version'),
+    '#title' => t('Flowplayer'),
     '#collapsed' => FALSE,
     '#collapsible' => FALSE,
   );
@@ -172,32 +155,30 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
     '#description' => t('The key to enable the use of the commercial version of the player'),
   );
 
-  $form['plugins'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Enable/disable flowplayer plugins'),
-    '#collapsed' => FALSE,
-    '#collapsible' => FALSE,
+  $form['flowplayer']['plugins'] = array(
+    '#type' => 'item',
+    '#title' => t('Plugins'),
   );
 
-  $form['plugins']['dlts_bitstream_flowplayer_plugins_audio'] = array(
+  $form['flowplayer']['dlts_bitstream_flowplayer_plugins_audio'] = array(
     '#type' => 'checkbox',
     '#title' => t('Audio'),
     '#default_value' => (isset($config['flowplayer']['player']['plugins']['audio']['enabled'])) ? $config['flowplayer']['player']['plugins']['audio']['enabled'] : $default['flowplayer']['player']['plugins']['audio']['enabled'],
   );
 
-  $form['plugins']['dlts_bitstream_flowplayer_plugins_bwcheck'] = array(
+  $form['flowplayer']['dlts_bitstream_flowplayer_plugins_bwcheck'] = array(
     '#type' => 'checkbox',
     '#title' => t('Bandwidth detection'),
     '#default_value' => (isset($config['flowplayer']['player']['plugins']['bwcheck']['enabled'])) ? $config['flowplayer']['player']['plugins']['bwcheck']['enabled'] : $default['flowplayer']['player']['plugins']['bwcheck']['enabled'],
   );
 
-  $form['plugins']['dlts_bitstream_flowplayer_plugins_controls'] = array(
+  $form['flowplayer']['dlts_bitstream_flowplayer_plugins_controls'] = array(
     '#type' => 'checkbox',
     '#title' => t('Controlbar'),
     '#default_value' => (isset($config['flowplayer']['player']['plugins']['controls']['enabled'])) ? $config['flowplayer']['player']['plugins']['controls']['enabled'] : $default['flowplayer']['player']['plugins']['controls']['enabled'],
   );
 
-  $form['plugins']['dlts_bitstream_flowplayer_plugins_rtmp'] = array(
+  $form['flowplayer']['dlts_bitstream_flowplayer_plugins_rtmp'] = array(
     '#type' => 'checkbox',
     '#title' => t('Streaming RTMP'),
     '#default_value' => (isset($config['flowplayer']['player']['plugins']['rtmp']['enabled'])) ? $config['flowplayer']['player']['plugins']['rtmp']['enabled'] : $default['flowplayer']['player']['plugins']['rtmp']['enabled'],
@@ -547,6 +528,20 @@ function dlts_interview_player_flowplayer_config($form, &$form_state) {
     '#default_value' => ( isset( $config['flowplayer']['clip']['scaling'] ) ) ? $config['flowplayer']['clip']['scaling'] : $default['flowplayer']['clip']['scaling'],
   );
 
+  $form['flash'] = array(
+  		'#type' => 'fieldset',
+  		'#title' => t('Flash settings'),
+  		'#collapsed' => FALSE,
+  		'#collapsible' => FALSE,
+  );
+
+  $form['flash']['dlts_bitstream_flash_disableError'] = array(
+  		'#type' => 'textarea',
+  		'#title' => t('Flash disable error message'),
+  		'#default_value' => variable_get( 'dlts_bitstream_flash_disableError', dlts_interview_default_flash_disable_error() ),
+  		'#description' => t('Error message to be display when Flash plugin is disable or installed.'),
+  );
+
   return system_settings_form($form);
 }
 
@@ -583,52 +578,49 @@ function dlts_interview_player_flowplayer_config_validate($form, &$form_state) {
     $config['player']['js_api'] = $form_state['values']['dlts_bitstream_flowplayer_js_api'];
   }
 
-  /*
+  /**
    * Available Flowplayer plugins (flash). Used to provide the plugin location
    */
-
   $available_flow_plugins_flash = dlts_bitstream_available_flowplayer_plugins_flash();
 
   foreach ( $form_state['values'] as $key => $value ) {
 
-    /**
-     * Plugins
-     */
-    if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)_([a-zA-Z]*)$/', $key, $matches )  ) {
+  	/** Plugin enabled? */
+  	if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)$/', $key, $plugin ) && $value ) $config['player']['plugins'][$plugin[1]]['enabled'] = TRUE;
+
+    /** Plugins */
+    if ( preg_match('/dlts_bitstream_flowplayer_plugins_([a-zA-Z]*)_([a-zA-Z]*)$/', $key, $matches ) ) {
 
       if ( isset( $form_state['values']['dlts_bitstream_flowplayer_plugins_' . $matches[1] ] ) && $form_state['values']['dlts_bitstream_flowplayer_plugins_' . $matches[1]] == TRUE ) {
 
-        /*
+        /**
          * Plug-ins don't live in the same location as the JS caller, we need to provide the
          * URL parameter for each plugin.
          */
+        if ( !isset( $config['player']['plugins'][$matches[1]] ) ) $config['player']['plugins'][$matches[1]]['url'] = $available_flow_plugins_flash[$matches[1]];
 
-        if ( !isset( $config['player']['plugins'][$matches[1]] ) ) {
-      	  $config['player']['plugins'][$matches[1]]['url'] = $available_flow_plugins_flash[$matches[1]];
-        }
-
-        /*
+        /**
          * Config as pair of keys and values:
          *   $matches[1] = plugin name
          *   $matches[2] = plugin parameter
          *   $value = parameter value
          */
-
       	$config['player']['plugins'][$matches[1]][$matches[2]] = $value;
-
       }
     }
 
-    /**
-     * Clip
-     */
+    /** Clip */
     if ( preg_match('/dlts_bitstream_flowplayer_clip_([a-zA-Z]*)$/', $key, $matches )  ) {
-      if ( isset( $form_state['values']['dlts_bitstream_flowplayer_clip_' . $matches[1] ] ) && $form_state['values']['dlts_bitstream_flowplayer_clip_' . $matches[1]]  !== '' ) {
+      if ( isset( $form_state['values']['dlts_bitstream_flowplayer_clip_' . $matches[1] ] ) && $form_state['values']['dlts_bitstream_flowplayer_clip_' . $matches[1]] !== '' ) {
         $config['clip'][$matches[1]] = $value;
       }
     }
+
+    /** Remove anything that match dlts_bitstream from $form_state['values']; later on we will add a serialize version of $config as a variable */
+    if ( preg_match('/dlts_bitstream/', $key, $input ) && !empty( $input ) ) unset( $form_state['values'][$key] );
+
   }
 
-  $form_state['values']['dlts_bitstream_globals_flowplayer'] = serialize( $config );
+  $form_state['values']['dlts_bitstream_globals_flowplayer'] = serialize( array( 'flowplayer' => $config ) );
 
 }

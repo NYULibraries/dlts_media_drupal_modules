@@ -142,12 +142,11 @@ function _dlts_interview_rtpm_default_clipURL( &$setup, $index = 0 ) {
  * HTTP, RTMP, bwcheck
  */
 function _dlts_interview_resolver(&$setup, $index = 0) {
+
   /*
    * Bandwidth detection and RTMP
-   *
    * Clip resolver must be set to bwcheck
    */
-
   if ( isset( $setup['player']['plugins'] ) ) {
     if ( isset( $setup['player']['plugins']['bwcheck'] ) && isset( $setup['player']['plugins']['rtmp'] ) ) {
       $setup['player']['plugins']['bwcheck']['hdButton'] = TRUE; // make this a option @ flowplayer admin page?

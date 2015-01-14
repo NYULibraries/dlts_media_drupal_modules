@@ -1,10 +1,6 @@
 <?php
 
 /**
- * @file
- */
-
-/**
  * Constants
  */
 defined('DLTS_INTERVIEW_PATH') or define('DLTS_INTERVIEW_PATH', drupal_get_path( 'module', 'dlts_interview') );
@@ -138,8 +134,6 @@ function theme_dlts_interview_player_flowplayer_js($variables) {
 
   drupal_add_css( libraries_get_path('flowplayer') . '/skin/minimalist.css', array( 'group' => CSS_DEFAULT, 'every_page' => TRUE ) );
 
-  drupal_add_css( DLTS_INTERVIEW_PATH . '/css/dlts_interview.css', array( 'group' => CSS_DEFAULT, 'every_page' => TRUE ) );
-
   drupal_add_js( $variables['player']['js_api'] );
 
   drupal_add_js(
@@ -160,8 +154,11 @@ function theme_dlts_interview_player_flowplayer_js($variables) {
     ),
     'setting'
   );
+
   drupal_add_js( DLTS_INTERVIEW_PATH . '/js/dlts_interview.js' );
+
   return '<div class="player flowplayer" id="'. $variables['streams'][0]['id'] .'"></div>';
+
 }
 
 function theme_dlts_interview_html_player($variables) {
