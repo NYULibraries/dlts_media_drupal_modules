@@ -1,0 +1,8 @@
+name = DLTS Media Display
+description = "Add a embed view mode display to the node"
+package = DLTS
+
+; Core version (required)
+core = 7.x
+
+dependencies[] = dlts_media_api

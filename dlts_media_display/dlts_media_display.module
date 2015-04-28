@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Implements hook_custom_theme().
+ * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_custom_theme/7
+ */
+function dlts_media_api_custom_theme() {
+  /** Get the arguments from Drupal path */
+  $arg = arg();
+  /** count should be eq 4. we want to match /{resource}/{identifier}/mode/embed */
+  $count = count ( $arg );
+  /** we have 4 arguments and they mathc a embed request; return embed theme instead of the default */
+  if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode'  ) return 'dlts_embed';
+}
+
+/**
+ * Implements hook_menu().
+ */
+function dlts_media_display_menu() {
+  return array(
+    'creative-work/%dlts_creativework/mode/embed' => array(
+      'title' => 'Creative Work embed view',
+      'access arguments' => array('access content'),
+      'page callback' => 'dlts_media_api_embed_display',
+      'page arguments' => array(1),
+      'delivery callback' => 'drupal_deliver_html_page',
+      'type' => MENU_CALLBACK,
+    ),
+    'playlist/%dlts_playlist/mode/embed' => array(
+      'title' => 'Playlist embed view',
+      'access arguments' => array('access content'),
+      'page callback' => 'dlts_media_api_embed_display',
+      'page arguments' => array(1),
+      'delivery callback' => 'drupal_deliver_html_page',
+      'type' => MENU_CALLBACK,
+    ),
+    'clip/%dlts_clip/mode/embed' => array(
+      'title' => 'Clip embed view',
+      'access arguments' => array('access content'),
+      'page callback' => 'dlts_media_api_embed_display',
+      'page arguments' => array(1),
+      'delivery callback' => 'drupal_deliver_html_page',
+      'type' => MENU_CALLBACK,
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ * https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_entity_info_alter/7
+ */
+function dlts_media_display_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['embed'] = array(
+    'label' => t('Embed mode'),
+    'custom settings' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_preprocess_node().
+ * https://api.drupal.org/api/drupal/modules!node!node.module/function/template_preprocess_node/7
+ */
+function dlts_media_display_preprocess_node(&$vars) {
+  if ($vars['view_mode'] == 'embed') {
+    $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__embed';
+  }
+}
+
+/**
+ * Given a node, return the Embed view. Embed view can be customize in manage display section
+ * for each Content type e.g., {site}/admin/structure/types/manage/{content-type}/display
+ */
+function dlts_media_api_embed_display( $node ) {
+  return node_view( $node, 'embed' );
+}
