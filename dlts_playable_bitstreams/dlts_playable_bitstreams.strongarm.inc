@@ -14,7 +14,7 @@ function dlts_playable_bitstreams_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'additional_settings__active_tab_dlts_bitstream_set';
-  $strongarm->value = 'edit-menu';
+  $strongarm->value = 'edit-unique-field';
   $export['additional_settings__active_tab_dlts_bitstream_set'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -224,7 +224,7 @@ function dlts_playable_bitstreams_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_preview_dlts_bitstream_set';
-  $strongarm->value = '1';
+  $strongarm->value = '0';
   $export['comment_preview_dlts_bitstream_set'] = $strongarm;
 
   $strongarm = new stdClass();
