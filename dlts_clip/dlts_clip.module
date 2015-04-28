@@ -1,0 +1,277 @@
+<?php
+
+/**
+ * Implements hook_field_info().
+ */
+function dlts_clip_field_info() {
+  return array(
+    'dlts_clip_field' => array(
+      'label' => t('DLTS Clip'),
+      'description' => t('Store data about a media Clip.'),
+      'default_widget' => 'dlts_clip_field',
+      'default_formatter' => 'dlts_clip_default_formatter',
+    ),
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function dlts_clip_theme ( $existing, $type, $theme, $path ) {
+  return array (
+    'dlts_clip_media' => array (
+      'variables' => array (
+      	'identifier' => NULL,
+      	'f4m' => NULL,
+      	'm3u' => NULL,
+      	'pd' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_validate().
+ */
+function dlts_clip_field_validate ($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+
+  foreach ($items as $delta => $item) {
+
+    if (!empty($item['identifier'])) {
+      if (! preg_match('/[0-9a-zA-Z_-]/', $item['identifier'])) {
+        $errors[$field['field_name']][$langcode][$delta][] = array( 'error' => 'Clip identifier invalid', );
+      }
+    }
+
+  }
+
+}
+
+/**
+ * Implement hook_field_is_empty().
+ */
+function dlts_clip_field_is_empty($item, $field) {
+  return empty($item['identifier']);
+}
+
+/**
+ * Implementation of hook_field_formatter_info().
+ */
+function dlts_clip_field_formatter_info() {
+  return array(
+    'dlts_clip_default_formatter' => array(
+      'label' => t('Default'),
+      'field types' => array('dlts_clip_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ */
+function dlts_clip_field_formatter_view ( $entity_type, $entity, $field, $instance, $langcode, $items, $display ) {
+
+  $element = array();
+
+  $detect = mobile_detect_get_object();
+
+  $is_mobile = $detect->isMobile();
+
+  $is_tablet = $detect->isTablet();
+
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'isTablet' => $is_tablet , 'isMobile' => $is_mobile ,   ) ) , 'setting' ) ;
+
+  switch ( $display['type']) {
+    case 'dlts_clip_default_formatter':
+      foreach ($items as $delta => $item ) {
+        $element[$delta]['#markup'] = theme( 'dlts_clip_media' , $item ) ;
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_info().
+ */
+function dlts_clip_field_widget_info() {
+  return array(
+    'dlts_clip_default' => array(
+      'label' => t('Clip file for streaming video'),
+      'field types' => array('dlts_clip_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ */
+function dlts_clip_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  $element += array(
+    '#delta' => $delta,
+    '#type' => 'fieldset',
+    'identifier' => array(
+      '#type' => 'textfield',
+      '#title' => 'Clip Identifier',
+      '#size' => 50,
+      '#default_value' => isset($items[$delta]['identifier']) ? $items[$delta]['identifier'] : '',
+      '#attributes' => array(
+        'placeholder' => 'xxxxxxxxxx',
+      ),
+    ),
+    'f4m' => array(
+      '#type' => 'textfield',
+      '#title' => 'Flash Media Manifest (F4M)',
+      '#size' => 50,
+      '#default_value' => isset($items[$delta]['f4m']) ? $items[$delta]['f4m'] : '',
+      '#attributes' => array(
+        'placeholder' => 'http://example.com/manifest.f4m',
+      ),
+    ),
+    'm3u' => array(
+      '#type' => 'textfield',
+      '#title' => 'M3U Playlist',
+      '#size' => 50,
+      '#default_value' => isset($items[$delta]['m3u']) ? $items[$delta]['m3u'] : '',
+      '#attributes' => array(
+        'placeholder' => 'http://example.com/manifest.m3u',
+      ),
+    ),
+    'pd' => array(
+      '#type' => 'textfield',
+      '#title' => 'Progressive Download; media file over HTTP',
+      '#size' => 50,
+      '#default_value' => isset($items[$delta]['pd']) ? $items[$delta]['pd'] : '',
+      '#attributes' => array(
+        'placeholder' => 'http://example.com/clip.mp4',
+      ),
+    ),
+  );
+
+  return $element;
+
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function dlts_clip_field_instance_settings_form($field, $instance) {
+
+  $form = array();
+
+  $form['display'] = array(
+    '#tree' => TRUE,
+  );
+
+  $form['attributes'] = array(
+    '#tree' => TRUE,
+  );
+
+  return $form;
+
+}
+
+function theme_dlts_clip_media ( $vars ) {
+
+  $vars['id'] = uniqid('p') ;
+
+  // add CSS theme
+  drupal_add_css ( libraries_get_path('flowplayer') . '/skin/minimalist.css', array( 'group' => CSS_DEFAULT, 'every_page' => FALSE ) );
+
+  // add Flowplayer JavaScript API
+  drupal_add_js ( libraries_get_path('flowplayer') . '/flowplayer-3.2.13.min.js' ) ;
+
+  // move to .info
+  drupal_add_js ( drupal_get_path( 'module', 'dlts_clip') . '/dlts_clip.js' );
+
+  $output = '<div class="player" id="' . $vars['id'] . '" style="background-image:url()">';
+  $output .= '  <span class="play" alt="' . t('Play this video') . '" />';
+  $output .= '</div>';
+
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $vars['id'] => $vars ) ) ) , 'setting' ) ;
+
+  return $output;
+
+}
+
+/**
+ * FAPI theme for an individual text elements.
+ */
+function theme_dlts_clip_field ( $vars ) {
+
+  dpm ( $vars ) ;
+
+  $output = '';
+
+  $element = $vars['element'];
+
+  // Prefix single value link fields with the name of the field.
+
+  $output .= '<div class="Clip-field-subrow clearfix">';
+
+  if ( isset($element['title']) ) {
+    $output .= '<div class="Clip-field-title Clip-field-column">'. drupal_render($element['identifier']) .'</div>';
+  }
+
+  $output .= '<div class="dlts-Clip-field-identifier'. (isset($element['identifier']) ? ' Clip-field-column' : '') .'">'. drupal_render($element['identifier']) .'</div>';
+
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
+ * Implements hook_element_info().
+ */
+function dlts_clip_element_info() {
+  $elements = array();
+  $elements['dlts_clip_field'] =  array(
+    '#input' => TRUE,
+  );
+  return $elements;
+}
+
+/**
+ * Process the link type element before displaying the field.
+ *
+ * Build the form element. When creating a form using FAPI #process,
+ * note that $element['#value'] is already set.
+ *
+ * The $fields array is in $complete_form['#field_info'][$element['#field_name']].
+ */
+function dlts_clip_field_process($element, $form_state, $complete_form) {
+
+  $settings = &$form_state['field'][$element['#field_name']][$element['#language']]['instance']['settings'];
+
+  $element['identifier'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Identifier'),
+    '#required' => TRUE,
+    '#default_value' => NULL,
+  );
+
+  $element['f4m'] = array(
+    '#type' => 'varchar',
+    '#title' => t('Flash Media Manifest (F4M)'),
+    '#required' => TRUE,
+    '#default_value' => NULL,
+  );
+
+  $element['m3u'] = array(
+    '#type' => 'varchar',
+    '#title' => t('M3U Playlist'),
+    '#required' => TRUE,
+    '#default_value' => NULL,
+  );
+
+  $element['pd'] = array(
+    '#type' => 'varchar',
+    '#title' => t('M3U Playlist'),
+    '#required' => TRUE,
+    '#default_value' => NULL,
+  );
+
+  return $element;
+
+}
