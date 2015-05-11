@@ -46,4 +46,3 @@ function dlts_clip_field_schema ($field) {
     ),
   );
 }
-

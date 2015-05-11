@@ -1,7 +1,0 @@
-name = DLTS Clip
-description = Structured data about media clip.
-core = 7.x
-package = Fields
-
-dependencies[] = libraries
-dependencies[] = mobile_detect
