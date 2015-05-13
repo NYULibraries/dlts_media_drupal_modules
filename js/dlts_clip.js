@@ -1,14 +1,33 @@
 ; (function ($) {
   Drupal.behaviors.dlts_clip = {
+  
     attach: function ( context, settings ) {
-    	
-      var detect = settings.dlts_clip.detect ;
-      
-      if ( detect.isiOS ) return ;
-	
-      var player_conf = settings.dlts_clip.player ; 
 
-      var players = { } ;
+    function html_video ( ) {
+
+      flowplayer ( function ( api, root ) {
+
+        api.bind("ready", function ( elem ) { 
+        
+          console.log ( 'ready' ) ;
+          
+          var start = $(elem.currentTarget).attr('data-start') ;
+          
+          console.log ( elem.currentTarget ) ;          
+          
+          if ( start ) api.seek ( start ) ;
+          
+        } ) ;  
+ 
+      });    
+    
+    }
+    	
+    var detect = settings.dlts_clip.detect ;
+      
+    var player_conf = settings.dlts_clip.player ; 
+
+    var players = { } ;
 
       var playlists = { } ;
 
@@ -55,8 +74,12 @@
         return conf ;
 
       }
-
-     $('.dlts_clip').each ( function ( ) {
+      
+      if ( detect.isiOS || detect.isSafari ) html_video ( ) ;
+      
+      else {
+	
+        $('.dlts_clip').each ( function ( ) {
     	 
        var conf ;
 
@@ -89,5 +112,8 @@
      } ) ;     
       
     }
+    
+    }
+    
   }
 })(jQuery);
