@@ -3,17 +3,21 @@
   
     attach: function ( context, settings ) {
 
-    function html_video ( ) {
-
       flowplayer ( function ( api, root ) {
+      
+        var parent = $(root) ;
+        
+        $('.fp-playlist a').click( function ( ) {
+
+          parent.attr( { 'data-start' : $(this).attr('data-start') } ) ;
+        
+          parent.attr( { 'data-duration' : $(this).attr('data-duration')  } ) ;
+
+        } ) ;
 
         api.bind("ready", function ( elem ) { 
-        
-          console.log ( 'ready' ) ;
-          
+         
           var start = $(elem.currentTarget).attr('data-start') ;
-          
-          console.log ( elem.currentTarget ) ;          
           
           if ( start ) api.seek ( start ) ;
           
@@ -21,8 +25,6 @@
  
       });    
     
-    }
-    	
     var detect = settings.dlts_clip.detect ;
       
     var player_conf = settings.dlts_clip.player ; 
@@ -75,7 +77,7 @@
 
       }
       
-      if ( detect.isiOS || detect.isSafari ) html_video ( ) ;
+      if ( detect.isiOS || detect.isSafari ) { }
       
       else {
 	

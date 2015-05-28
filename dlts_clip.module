@@ -420,6 +420,10 @@ function dlts_embed_node_view_dlts_playlist ( $node ) {
   	  'large' => $large,
   	  'thumbnails_playlist' => $thumbnails_playlist,
   	) ;
+  	
+  	$bitstream['start'] = $clip->field_start->value() ; 
+  	
+  	$bitstream['duration'] = $clip->field_duration->value() ;  
 
   	/** for now until i get this right */
   	$data['stream'][$clip_identifier] = $bitstream ;
@@ -626,15 +630,19 @@ function dlts_clip_playlist_ios_markup ( $data ) {
   $inline_style = '.flowplayer { background-image: url(' . $data['poster'] . '); }' ;
 
   foreach ( $data['stream'] as $stream ) {
-  	$links .= l ('', $stream['m3u'], array( 'external' => TRUE, 'attributes' => array ( 'id' => $stream['identifier'] ) ) ) ;
+  
+  	$links .= l ('', $stream['m3u'], array( 'external' => TRUE, 'attributes' => array ( 'id' => $stream['identifier'] , 'data-duration' => $stream['duration'] , 'data-start' => $stream['start'] , ) ) ) ;
+
   	$inline_style .= '.flowplayer .fp-playlist #' . $stream['identifier'] . ' { background: url(' . $stream['representative_image']['thumbnails_playlist'] . ') no-repeat; }' ;
+
   	$inline_style .= '.flowplayer.is-ready .fp-playlist a#' . $stream['identifier'] . ', .flowplayer.is-loading .fp-playlist a#' . $stream['identifier'] . ' { background: url(' . $stream['representative_image']['thumbnail'] . ') no-repeat; }' ;
+
   }
 
   /** HTML markup */
   $output =
    '<style>' . $inline_style . '</style>
-	<div id="' . $data['identifier'] . '" data-fullscreen="true" class="flowplayer is-splash">
+	<div id="' . $data['identifier'] . '" data-fullscreen="true" data-duration="'. $first_video['duration'] . '" data-start="'. $first_video['start'] . '" class="dlts_playlist flowplayer is-splash">
       <video>
         <source type="application/x-mpegurl" src="' . $first_video['m3u'] . '">
       </video>
