@@ -43,6 +43,11 @@ function dlts_playable_bitstreams_views_default_views() {
   $handler->display->display_options['fields']['status']['table'] = 'node';
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -233,6 +238,11 @@ function dlts_playable_bitstreams_views_default_views() {
   $handler->display->display_options['fields']['field_code']['id'] = 'field_code';
   $handler->display->display_options['fields']['field_code']['table'] = 'field_data_field_code';
   $handler->display->display_options['fields']['field_code']['field'] = 'field_code';
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -463,6 +473,11 @@ function dlts_playable_bitstreams_views_default_views() {
   $handler->display->display_options['fields']['field_code']['id'] = 'field_code';
   $handler->display->display_options['fields']['field_code']['table'] = 'field_data_field_code';
   $handler->display->display_options['fields']['field_code']['field'] = 'field_code';
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -531,6 +546,11 @@ function dlts_playable_bitstreams_views_default_views() {
   $handler->display->display_options['fields']['status']['table'] = 'node';
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Edit';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
