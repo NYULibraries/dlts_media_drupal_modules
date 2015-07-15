@@ -1964,7 +1964,7 @@ function dlts_playable_bitstreams_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '7',
+        'weight' => '3',
       ),
     ),
   );
