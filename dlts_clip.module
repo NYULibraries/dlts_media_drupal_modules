@@ -532,7 +532,6 @@ function theme_dlts_clip_media_js ($vars) {
 }
 
 function dlts_clip_video_markup($vars) {
-  dpm($vars);
   // HTML markup
   $render_array = array(
     '#type' => 'container',
