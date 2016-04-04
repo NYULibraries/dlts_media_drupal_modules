@@ -298,7 +298,8 @@ function dlts_embed_node_view_dlts_clip($node) {
   );
   /** Wrap it with Entity API */
   $bitstream_ref = $dlts_clip_wrapper->field_bitstream_ref->value() ;
-  $bitstream = array_shift ( array_values ( $bitstream_ref->field_bitstream[$node->language] ) ) ;
+  $values = array_values ($bitstream_ref->field_bitstream[$node->language]);
+  $bitstream = array_shift($values);
   $data = array (
     'image' => $representative_image ,
     'duration' => $duration ,
@@ -323,7 +324,8 @@ function dlts_embed_node_view_dlts_bitstream_set ( $node ) {
 	/** Wrap it with Entity API */
 	$wrapper = entity_metadata_wrapper('node', $node);
 	$identifier = $wrapper->field_identifier->value() ;
-	$data = array_shift ( array_values ( $node->field_bitstream[$node->language] ) ) ;
+  $values = array_values($node->field_bitstream[$node->language]);
+  $data = array_shift ($values);
 	if ( $detect['isiOS'] || $detect['isSafari'] ) {
 	  $markup = dlts_clip_bitstream_ios_markup ( $data ) ;
 	}
@@ -518,41 +520,34 @@ function dlts_clip_embed_display ( $node ) {
 /**
  * Theme functions
  */
-function theme_dlts_clip_media ( $vars ) {
-
+function theme_dlts_clip_media($vars) {
   $vars['type'] = 'dlts_clip';
-
-  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $vars['identifier'] => $vars ) ) ) , 'setting' ) ;
-
-  $render_array = dlts_clip_video_markup ( $vars['identifier'] , $vars['type'] , $vars ) ;
-
-  return drupal_render ( $render_array ) ;
-
+  drupal_add_js(array('dlts_clip' => array('media' => array($vars['identifier'] => $vars))), 'setting');
+  $render_array = dlts_clip_video_markup($vars);
+  return drupal_render($render_array);
 }
 
-function theme_dlts_clip_media_js ( $vars ) {
-
-  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $vars['identifier'] => $vars ) ) ) , 'setting' ) ;
-
+function theme_dlts_clip_media_js ($vars) {
+  drupal_add_js(array('dlts_clip' => array ('media' => array($vars['identifier'] => $vars))), 'setting');
 }
 
-function dlts_clip_video_markup ( $vars ) {
-
+function dlts_clip_video_markup($vars) {
+  dpm($vars);
   // HTML markup
   $render_array = array(
     '#type' => 'container',
-	'#attributes' => array(
+	  '#attributes' => array(
 	  'id' => $vars['identifier'],
 	  'data-f4m' => $vars['f4m'],
 	  'data-hsl' => $vars['m3u'],
 	  'class' => array ( $vars['type'] ),
     ),
-	'span-0' => array(
-	  '#theme' => 'html_tag',
-	  '#tag' => 'span',
-	  '#value' => '',
-	  '#attributes' => array(
-	    'class' => array('play'),
+	  'span-0' => array(
+	    '#theme' => 'html_tag',
+	    '#tag' => 'span',
+	    '#value' => '',
+	    '#attributes' => array(
+	      'class' => array('play'),
         'alt' => t('Play this video')
       ),
     ),
@@ -560,8 +555,7 @@ function dlts_clip_video_markup ( $vars ) {
   return $render_array ;
 }
 
-function dlts_clip_playlist_markup ( $vars ) {
-
+function dlts_clip_playlist_markup($vars) {
   // HTML markup
   $render_array = array(
     '#type' => 'container',
@@ -839,7 +833,6 @@ function dlts_clip_embed_response ( $node, $pre_response = array() ) {
  *   Template variables.
  */
 function dlts_clip_preprocess_html ( &$vars ) {
-
   $meta = array (
     '#type' => 'html_tag',
     '#tag' => 'meta',
@@ -847,11 +840,9 @@ function dlts_clip_preprocess_html ( &$vars ) {
       'name' =>  'apple-mobile-web-app-capable',
       'content' => 'yes',
     )
-  ) ;
-
+  );
   // Add header meta tag for IE to head
   drupal_add_html_head( $meta , 'apple_mobile_web_app_capable');
-
   $meta = array (
     '#type' => 'html_tag',
     '#tag' => 'meta',
@@ -860,8 +851,6 @@ function dlts_clip_preprocess_html ( &$vars ) {
       'content' => 'black-translucent',
     )
   ) ;
-
   // Add header meta tag for IE to head
   drupal_add_html_head( $meta , 'apple_mobile_web_app_status_bar_style');
-
 }
