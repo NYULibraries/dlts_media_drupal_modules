@@ -39,14 +39,6 @@ function dlts_clip_menu() {
       'access arguments' => array('access administration pages'),
       'file' => 'inc/dlts_clip.admin.inc',
     ),
-    'admin/config/system/dlts-ga' => array(
-      'title' => 'DLTS - Google Analytics',
-      'description' => 'Configure settings related to Google Analytics.',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('dlts_clip_ga_config'),
-      'access arguments' => array('access administration pages'),
-      'file' => 'inc/dlts_clip.admin.inc',
-    ),
   );
 }
 
@@ -117,14 +109,6 @@ function dlts_clip_field_info() {
  */
 function dlts_clip_theme($existing, $type, $theme, $path) {
   return array(
-  	'dlts_ga_script' => array(
-  	  'template' => 'templates/dlts_gacode',
-  		'variables' => array(
-  				'ua' => '',
-  				'anonymizeIp' => 'true',
-  				'cookieDomain' => 'auto',
-  		),
-  	),
     'dlts_clip_media' => array (
       'variables' => array (
       	'identifier' => NULL,
@@ -175,50 +159,12 @@ function dlts_clip_field_is_empty ( $item, $field ) {
   return empty($item['identifier']);
 }
 
-function addGoogleAnalytics($conf) {
-	/** Load the currently logged in user. */
-	global $user;
-	/** just add when user is not admin */
-	$dlts_ga_debug = variable_get('dlts_ga_debug', false);
-	if ($dlts_ga_debug || !in_array('administrator', $user->roles)) {
-	  $conf['enable'] = 1;
-	  $conf['debug'] = $dlts_ga_debug;	  
-	  $conf['ua'] = variable_get('dlts_ga_code');
-	  $conf['cookieDomain'] = variable_get('dlts_ga_cookiedomain', 'auto');
-	  $conf['anonymizeIp'] = variable_get('dlts_ga_anonymizeip', 'true');	  	  
-    $ga_conf = array('dlts_ga' => $conf);
-		$ga_string  = theme('dlts_ga_script',$conf);
-		drupal_add_js($ga_string, 'inline');
-    drupal_add_js($ga_conf, 'setting');	
-    if ($dlts_ga_debug) drupal_add_js('console.log("Google Analytics debug on");', 'inline');
-	}
-}
-
 /**
  * Implementation of hook_node_view()
  * Act on a node that is being assembled before rendering.
  * See: https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7
  */
 function dlts_clip_node_view($node, $view_mode, $langcode) {
-  $dlts_ga_enable = variable_get('dlts_ga_enable', FALSE);
-	if ($dlts_ga_enable && field_info_instance('node', 'field_collection', $node->type)) {
-	  $wrapper = entity_metadata_wrapper('node', $node);
-	  $collections = $wrapper->field_collection->value();
-	  $ga_options = array('collections' => array());
-	  foreach ($collections as $collection) {
-		  $collection_wrapper = entity_metadata_wrapper('node', $collection);
-		  $collection_name = $collection_wrapper->field_name->value() ;
-		  //$collection_code = $collection_wrapper->field_code->value() ;
-		  $ga_options['collections'][] = array(
-				'name' => $collection_name,
-				//'code' => $collection_code,
-		  );
-		  unset($collection_wrapper);
-		  unset($collection_name);
-		  unset($collection_code);
-	  }
-	  addGoogleAnalytics($ga_options);
-	}
   switch ($node->type) {
     case 'dlts_playlist' :
   	  dlts_embed_node_view_dlts_playlist($node);
@@ -248,7 +194,7 @@ function dlts_clip_field_formatter_info ( ) {
  * Implements hook_field_formatter_view().
  *
  */
-function dlts_clip_field_formatter_view ( $entity_type, $entity, $field, $instance, $langcode, $items, $display ) {
+function dlts_clip_field_formatter_view( $entity_type, $entity, $field, $instance, $langcode, $items, $display ) {
   $element = array();
   switch ( $display['type'] ) {
     case 'dlts_clip_default_formatter' :
