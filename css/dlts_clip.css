@@ -1,4 +1,4 @@
-.dlts_media , .dlts_playlist, .dlts_clip { 
+.dlts_media, .dlts_playlist, .dlts_clip { 
   width: 700px;
   height: 450px;
   margin: 10px auto;
@@ -19,6 +19,10 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
+}
+
+.dlts_media.audio, .dlts_playlist.audio, .dlts_clip.audio {
+  height: 25px;
 }
 
 .stop {

@@ -1,12 +1,9 @@
 <?php
 
 function dlts_clip_flowplayer ( ) {
-
   /** Flowplayer skeleton and reference */
-  $setup = ( $setup = variable_get( 'dlts_bitstream_globals_flowplayer', FALSE ) ) ? unserialize( $setup ) : dlts_clip_default_flowplayer_configuration();
-
+  $setup = ( $setup = variable_get( 'dlts_bitstream_globals_flowplayer', FALSE ) ) ? unserialize($setup) : dlts_clip_default_flowplayer_configuration();
   return $setup;
-
 }
 
 /**
@@ -77,9 +74,7 @@ function dlts_clip_flowplayer_available_flowplayer_javascript_api() {
 }
 
 function dlts_clip_default_flowplayer_configuration () {
-
   $default = array();
-
   $default['flowplayer'] = array(
     'player' => array(
       'version' => FALSE,
