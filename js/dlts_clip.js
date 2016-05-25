@@ -1,5 +1,4 @@
 ;(function ($) {
-	
   function clipConf(stream) {
     return {
       scaling : 'fit',
@@ -8,9 +7,8 @@
       url : stream.f4m,
       start : stream.start,
       duration : stream.duration
-    };
+    }
   }
-
   function main(context, settings) {
     var players = {};
     var playlists = {};
@@ -39,7 +37,6 @@
         serverType: "fms"
       }
     };
-
     flowplayer(
       function(api, root) {
         var parent = $(root);
@@ -56,7 +53,6 @@
         });
       }
     );
-
     if (!detect.isiOS && !detect.isSafari) {
       $('.dlts_clip').each(function() {
         var id = $(this).attr('id');
@@ -75,19 +71,14 @@
       });
       
       $('.dlts_playlist').each(function() {
-        
         var id = $(this).attr('id');
-       
         var playlist = [];
-        
         if ($(settings.dlts_clip.playlists).size() > 1) {
           plugins.controls.playlist = true;        
         }
-        
         $.each(settings.dlts_clip.playlists[id], function(index, value) {
           playlist.push(clipConf(settings.dlts_clip.media[value]));
         });
-        
         $f(id, player_conf.url, {
           id : id,
           key : player_conf.key,
@@ -105,5 +96,7 @@
       });
     }
   }
+  
   Drupal.behaviors.dlts_clip = { attach: main };
+  
 })(jQuery);

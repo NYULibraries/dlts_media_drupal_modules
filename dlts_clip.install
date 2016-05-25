@@ -35,7 +35,6 @@ function dlts_clip_field_schema ($field) {
     	'length' => 2048,
     	'not null' => FALSE,
       ),
-
     ),
     'indexes' => array(
       'identifier' => array('identifier'),
