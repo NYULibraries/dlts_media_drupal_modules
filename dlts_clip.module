@@ -1,145 +1,45 @@
 <?php
 
-/**
- * A wildcard loader for dlts_clip nodes, using the clip identifier.
- *
- * @parameter $identifier
- *  The value of field_identifier for a dlts_clip node.
- *
- * @return
- * A node object with the given value for field_identifier.
- *
- * @todo
- * field_identifier is supposed to be unique across all books, but we do
- * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
- */
-function dlts_clip_load($identifier) {
-  $query = new EntityFieldQuery;
-  $identifier = filter_xss($identifier);
-  $result = $query
-    ->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'dlts_clip')
-    ->propertyCondition('status', 1)
-    ->fieldCondition('field_identifier', 'value', $identifier, '=')
-    ->addTag('node_access')
-    ->execute();
-  if (!empty($result['node'])) {
-  	$keys = array_keys($result['node']);
-  	return node_load( array_pop( $keys ) );
-  }
-  else {
-  	return FALSE;
-  }
-}
-
-/**
- * A wildcard loader for dlts_creativework nodes, using the CreativeWork identifier.
- *
- * @parameter $identifier
- *  The value of field_identifier for a dtls_creativework node.
- *
- * @return
- * A node object with the given value for field_identifier.
- *
- * @todo
- * field_identifier is supposed to be unique across all CreativeWork, but we do
- * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
- */
-function dlts_creativework_load($identifier) {
-  $query = new EntityFieldQuery;
-  $identifier = filter_xss($identifier);
-  $result = $query
-  	->entityCondition('entity_type', 'node')
-  	->entityCondition('bundle', 'dlts_creativework')
-  	->propertyCondition('status', 1)
-  	->fieldCondition('field_identifier', 'value', $identifier, '=')
-  	->addTag('node_access')
-  	->execute();
-  if ( !empty($result['node']) ) {
-    $keys = array_keys( $result['node'] );
-  	return node_load( array_pop( $keys ) );
-  }
-}
-
-/**
- * A wildcard loader for dlts_playlist nodes, using the playlist identifier.
- *
- * @parameter $identifier
- *  The value of field_identifier for a dlts_playlist node.
- *
- * @return
- * A node object with the given value for field_identifier.
- *
- * @todo
- * field_identifier is supposed to be unique across all playlist, but we do
- * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
- */
-function dlts_playlist_load($identifier) {
-  $query = new EntityFieldQuery;
-  $result = $query
-   	->entityCondition('entity_type', 'node')
-   	->entityCondition('bundle', 'dlts_playlist')
-   	->propertyCondition('status', 1)
-   	->fieldCondition('field_identifier', 'value', filter_xss($identifier), '=')
-   	->addTag('node_access')
-   	->execute();
-  if (!empty($result['node'])) {
-    $keys = array_keys($result['node']);
-   	return node_load(array_pop( $keys));
-  }
-}
+module_load_include('inc', 'dlts_clip', 'inc/loaders') ;
 
 /**
  * Implements hook_menu().
  */
-function dlts_clip_menu() {
+function dlts_clip_menu ( ) {
   return array(
     'creative-work/%dlts_creativework/mode/embed' => array(
-	    'title' => 'Creative Work embed view',
-	    'access arguments' => array('access content'),
-	    'page callback' => 'dlts_clip_embed_display',	    
-	    'page arguments' => array(1),
-	    'delivery callback' => 'drupal_deliver_html_page',
-	    'type' => MENU_CALLBACK,
-    ),
-    'playlists/%dlts_playlist/mode/embed' => array(
-      'title' => 'Playlist embed view',
-	    'access arguments' => array('access content'),
-	    'page callback' => 'dlts_clip_embed_display',
-      'page arguments' => array(1),
-  	  'delivery callback' => 'drupal_deliver_html_page',
-	    'type' => MENU_CALLBACK,
-    ),
-    'clip/%dlts_clip/mode/embed' => array(
-      'title' => 'Clip embed view',
-	    'access arguments' => array('access content'),
-	    'page callback' => 'dlts_clip_embed_display',
-	    'page arguments' => array(1),	    
-	    'delivery callback' => 'drupal_deliver_html_page',
-	    'type' => MENU_CALLBACK,
-    ),
-    'admin/config/dlts-clip' => array(
-      'title' => 'Flowplayer',
-      'description' => 'Configure settings related to Flowplayer.',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('dlts_clip_player_flowplayer_config'),
-      'access arguments' => array('access administration pages'),
-      'file' => 'inc/dlts_clip.admin.inc',
+	'title' => 'Creative Work embed view',
+	'access arguments' => array('access content'),
+	'page callback' => 'dlts_clip_embed_display',
+	'page arguments' => array(1),
+	'delivery callback' => 'drupal_deliver_html_page',
+	'type' => MENU_CALLBACK,
+  ),
+
+  'playlists/%dlts_playlist/mode/embed' => array(
+    'title' => 'Playlist embed view',
+	'access arguments' => array('access content'),
+	'page callback' => 'dlts_clip_embed_display',
+	'page arguments' => array(1),
+	'delivery callback' => 'drupal_deliver_html_page',
+	'type' => MENU_CALLBACK,
+  ),
+
+  'clip/%dlts_clip/mode/embed' => array(
+    'title' => 'Clip embed view',
+	'access arguments' => array('access content'),
+	'page callback' => 'dlts_clip_embed_display',
+	'page arguments' => array(1),
+	'delivery callback' => 'drupal_deliver_html_page',
+	'type' => MENU_CALLBACK,
+  ),
+  'admin/config/dlts-clip' => array(
+    'title' => 'Flowplayer',
+    'description' => 'Configure settings related to Flowplayer.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dlts_clip_player_flowplayer_config'),
+    'access arguments' => array('access administration pages'),
+    'file' => 'inc/dlts_clip.admin.inc',
     ),
   );
 }
@@ -147,42 +47,57 @@ function dlts_clip_menu() {
 /**
  * Implements hook_init().
  */
-function dlts_clip_init() {
+function dlts_clip_init ( ) {
+
   /** load player helper */
-  module_load_include('inc', 'dlts_clip', 'inc/flowplayer');
+  module_load_include('inc', 'dlts_clip', 'inc/flowplayer') ;
+
   /** load Flowplayer configuration */
-  $conf = dlts_clip_flowplayer();
+  $conf = dlts_clip_flowplayer ( ) ;
+
   /** load Mobile Detect */
-  /** find a more proper place to place this */
-  $detect = dlts_clip_mobile_detect();
+  $detect = dlts_clip_mobile_detect ( ) ;
+
   /** add CSS theme */
-  drupal_add_css(libraries_get_path('flowplayer-html') . '/skin/functional.css', array('group' => CSS_DEFAULT, 'every_page' => FALSE));
+  drupal_add_css ( libraries_get_path('flowplayer-html') . '/skin/functional.css', array( 'group' => CSS_DEFAULT, 'every_page' => FALSE ) ) ;
+
   /** add Flowplayer JavaScript API */
-  if ($detect['isiOS'] || $detect['isSafari']) {
-    drupal_add_js(libraries_get_path('flowplayer-html') . '/flowplayer.js') ;
-    drupal_add_css(drupal_get_path('module', 'dlts_clip') . '/css/classic.css', array('group' => CSS_DEFAULT, 'every_page' => FALSE));
+  if ( $detect['isiOS'] || $detect['isSafari']  ) {
+
+    drupal_add_js ( libraries_get_path('flowplayer-html') . '/flowplayer.js' ) ;
+
+    drupal_add_css ( drupal_get_path('module', 'dlts_clip') . '/css/classic.css', array( 'group' => CSS_DEFAULT, 'every_page' => FALSE ) ) ;
+
   }
+
   else {
-    drupal_add_js($conf['flowplayer']['player']['js_api']);
+    drupal_add_js ( $conf['flowplayer']['player']['js_api'] ) ;
   }
-  $jsConf = array('dlts_clip' => array ('player' => $conf['flowplayer']['player'], 'detect' => dlts_clip_mobile_detect()));
-  drupal_add_js($jsConf, 'setting');
+
+  $jsConf = array ( 'dlts_clip' => array (
+    'player' => $conf['flowplayer']['player']  ,
+    'detect' => dlts_clip_mobile_detect () ,
+  ) ) ;
+
+  drupal_add_js ( $jsConf , 'setting' ) ;
+
 }
 
 /**
  * Implements hook_custom_theme().
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_custom_theme/7
- * Find out the if this request is "embed"
  */
 function dlts_clip_custom_theme () {
+
   /** Get the arguments from Drupal path */
   $arg = arg();
+
   /** count should be eq 4. we want to match /{resource}/{identifier}/mode/embed */
-  $count = count($arg);
+  $count = count ( $arg );
+
   /** we have 4 arguments and they match a embed request; return embed theme instead of the default */
-  if ($count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode') {
-    return 'dlts_embed';
-  }
+  if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode'  ) return 'dlts_embed' ;
+
 }
 
 /**
@@ -202,8 +117,8 @@ function dlts_clip_field_info () {
 /**
  * Implements hook_theme().
  */
-function dlts_clip_theme($existing, $type, $theme, $path) {
-  return array(
+function dlts_clip_theme ( $existing, $type, $theme, $path ) {
+  return array (
     'dlts_clip_media' => array (
       'variables' => array (
       	'identifier' => NULL,
@@ -221,8 +136,14 @@ function dlts_clip_theme($existing, $type, $theme, $path) {
   		'pd' => NULL,
   	  ),
   	),
-    'dlts_clip_oembed' => array(
-  	  'variables' => array()
+    array (
+      'dlts_clip_oembed' => array(
+        'arguments' => array(
+          'url' => NULL,
+          'width' => NULL,
+          'height' => NULL,
+        ),
+      ),
     ),
   );
 }
@@ -230,11 +151,11 @@ function dlts_clip_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_field_validate().
  */
-function dlts_clip_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
+function dlts_clip_field_validate ($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {
   foreach ($items as $delta => $item) {
   	if (!empty($item['identifier'])) {
-      if (!preg_match('/[0-9a-zA-Z_-]/', $item['identifier'])) {
-        $errors[$field['field_name']][$langcode][$delta][] = array('error' => 'Clip identifier invalid');
+      if (! preg_match('/[0-9a-zA-Z_-]/', $item['identifier'])) {
+        $errors[$field['field_name']][$langcode][$delta][] = array( 'error' => 'Clip identifier invalid', );
       }
     }
   }
@@ -242,10 +163,10 @@ function dlts_clip_field_validate($entity_type, $entity, $field, $instance, $lan
 
 /**
  * Implement hook_field_is_empty().
- * @TODO: check for the manifest
  */
-function dlts_clip_field_is_empty($item, $field) {
-  return empty($item['identifier']);
+function dlts_clip_field_is_empty ( $item, $field ) {
+  /** @TODO: check for the manifest */
+  return empty ( $item['identifier'] ) ;
 }
 
 /**
@@ -253,16 +174,16 @@ function dlts_clip_field_is_empty($item, $field) {
  * Act on a node that is being assembled before rendering.
  * See: https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7
  */
-function dlts_clip_node_view($node, $view_mode, $langcode) {
-  switch ($node->type) {
+function dlts_clip_node_view ( $node, $view_mode, $langcode ) {
+  switch ( $node->type ) {
     case 'dlts_playlist' :
-  	  dlts_embed_node_view_dlts_playlist($node);
+  	  dlts_embed_node_view_dlts_playlist ( $node ) ;
   	  break;
     case 'dlts_clip' :
-      dlts_embed_node_view_dlts_clip($node);
+      dlts_embed_node_view_dlts_clip ( $node ) ;
   	  break;
     case 'dlts_bitstream_set' :
-  	  dlts_embed_node_view_dlts_bitstream_set($node);
+  	  dlts_embed_node_view_dlts_bitstream_set ( $node ) ;
   	  break;
   }
 }
@@ -270,7 +191,7 @@ function dlts_clip_node_view($node, $view_mode, $langcode) {
 /**
  * Implementation of hook_field_formatter_info().
  */
-function dlts_clip_field_formatter_info() {
+function dlts_clip_field_formatter_info ( ) {
   return array(
     'dlts_clip_default_formatter' => array(
       'label' => t('Default'),
@@ -281,20 +202,16 @@ function dlts_clip_field_formatter_info() {
 
 /**
  * Implements hook_field_formatter_view().
+ *
  */
-function dlts_clip_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-	$classes = array();
+function dlts_clip_field_formatter_view ( $entity_type, $entity, $field, $instance, $langcode, $items, $display ) {
   $element = array();
-  if (field_info_instance('node', 'field_media_type', $entity->type)) {
-    $wrapper = entity_metadata_wrapper('node', $entity);
-    $classes['media_type'] = $wrapper->field_media_type->value();
-  }
-  switch ($display['type']) {
+  switch ( $display['type'] ) {
     case 'dlts_clip_default_formatter' :
-      foreach ($items as $delta => $item) {
-        $element[$delta]['#markup'] = theme('dlts_clip_media' , array_merge($item, $classes));
+      foreach ( $items as $delta => $item ) {
+        $element[$delta]['#markup'] = theme( 'dlts_clip_media' , $item ) ;
       }
-      break;
+      break ;
   }
   return $element;
 }
@@ -302,11 +219,11 @@ function dlts_clip_field_formatter_view($entity_type, $entity, $field, $instance
 /**
  * Implements hook_field_widget_info().
  */
-function dlts_clip_field_widget_info() {
-  return array(
-    'dlts_clip_default' => array(
+function dlts_clip_field_widget_info () {
+  return array (
+    'dlts_clip_default' => array (
       'label' => t('Clip file for streaming video'),
-      'field types' => array('dlts_clip_field'),
+      'field types' => array ('dlts_clip_field'),
     ),
   );
 }
@@ -355,165 +272,195 @@ function dlts_clip_field_widget_form (&$form, &$form_state, $field, $instance, $
       ),
     ),
   );
+
   return $element ;
+
 }
 
 /**
  * Implements hook_field_instance_settings_form().
  */
-function dlts_clip_field_instance_settings_form($field, $instance) {
+function dlts_clip_field_instance_settings_form ( $field, $instance ) {
+
   $form = array();
+
   $form['display'] = array(
     '#tree' => TRUE,
   );
+
   $form['attributes'] = array(
     '#tree' => TRUE,
   );
+
   return $form;
+
 }
 
-function dlts_embed_node_view_dlts_clip($node) {
-	/** load Mobile Detect */
-	$detect = dlts_clip_mobile_detect();
+function dlts_embed_node_view_dlts_clip ( $node ) {
+
+  /** load Mobile Detect */
+  $detect = dlts_clip_mobile_detect () ;
+
   /** Wrap it with Entity API */
-  $dlts_clip_wrapper = entity_metadata_wrapper('node', $node);
-  $identifier = $dlts_clip_wrapper->field_identifier->value();
-  $start = (int) $dlts_clip_wrapper->field_start->value();
-  $duration = (int) $dlts_clip_wrapper->field_duration->value();
-  $thumbnail = $dlts_clip_wrapper->field_thumbnail->value();
-  $images = array();
-  foreach (array('poster', 'thumbnail', 'large', 'playlist') as $style) {
-  	$images[$style] = image_style_url($style, $thumbnail['uri']);
-  }
+  $dlts_clip_wrapper = entity_metadata_wrapper ( 'node', $node ) ;
+
+  $identifier = $dlts_clip_wrapper->field_identifier->value() ;
+
+  $start = (int) $dlts_clip_wrapper->field_start->value() ;
+
+  $duration = (int) $dlts_clip_wrapper->field_duration->value() ;
+
+  $thumbnail = $dlts_clip_wrapper->field_thumbnail->value() ;
+
+  $representative_image = array (
+    'poster' => image_style_url( 'poster' , $thumbnail['uri'] ) ,
+    'thumbnail' => image_style_url( 'thumbnail' , $thumbnail['uri'] ) ,
+    'large' => image_style_url( 'large' , $thumbnail['uri'] ) ,
+    'playlist' => image_style_url( 'playlist' , $thumbnail['uri'] ) ,
+  ) ;
+
   /** Wrap it with Entity API */
-  $bitstream_ref = $dlts_clip_wrapper->field_bitstream_ref->value();
-  $wrapper = entity_metadata_wrapper('node', $bitstream_ref);
-  $media_type = $wrapper->field_media_type->value();
-  if (empty($media_type)) {
-    $media_type = 'unknown';
-  }
-  $bitstream = array_shift(array_values($bitstream_ref->field_bitstream[$node->language]));
-  $data = array(
-    'image' => $images,
-    'duration' => $duration,
-    'identifier' => $bitstream['identifier'],
-    'start' => $start,
-    'type' => $media_type,
-  );
-  if ($detect['isiOS'] || $detect['isSafari']) {
+  $bitstream_ref = $dlts_clip_wrapper->field_bitstream_ref->value() ;
+
+  $bitstream = array_shift ( array_values ( $bitstream_ref->field_bitstream[$node->language] ) ) ;
+
+  $data = array (
+    'image' => $representative_image ,
+    'duration' => $duration ,
+    'identifier' => $bitstream['identifier'] ,
+    'start' => $start ,
+  ) ;
+
+  if ( $detect['isiOS'] || $detect['isSafari'] ) {
     $data['url'] = $bitstream['m3u'] ;
-    $markup = dlts_clip_clip_ios_markup($data);
+    $markup = dlts_clip_clip_ios_markup ( $data ) ;
   }
+
   else {
     $data['url'] = $bitstream['f4m'] ;
-    $markup = dlts_clip_clip_markup($data);
+    $markup = dlts_clip_clip_markup ( $data ) ;
   }
-  drupal_add_js(array('dlts_clip' => array('media' => array($bitstream['identifier'] => array('type' => $media_type,'duration' => $duration , 'start' => $start)))), 'setting');
-  $node->content['field_bitstream_ref'] = array('#type' => 'markup', '#markup' => $markup);
+  
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $bitstream['identifier'] => array ( 'duration' => $duration , 'start' => $start ,  ) )  ) ) , 'setting' ) ;
+
+  $node->content['field_bitstream_ref'] = array ( '#type' => 'markup' , '#markup' => $markup, ) ;
+
 }
 
-function dlts_embed_node_view_dlts_bitstream_set($node) {
+function dlts_embed_node_view_dlts_bitstream_set ( $node ) {
+
 	/** load Mobile Detect */
-	$detect = dlts_clip_mobile_detect();
+	$detect = dlts_clip_mobile_detect () ;
+
 	/** Wrap it with Entity API */
 	$wrapper = entity_metadata_wrapper('node', $node);
-	$identifier = $wrapper->field_identifier->value();
-	$data = array_shift(array_values($node->field_bitstream[$node->language]));
-  $data['media_type'] = 'media';
-  if (field_info_instance('node', 'field_media_type', $node->type)) {
-    $wrapper = entity_metadata_wrapper('node', $node);
-    $field_media_type = $wrapper->field_media_type->value();
-    if(!empty($field_media_type)) {
-      $data['media_type'] = 'media';
-    }
-  }
-	if ($detect['isiOS'] || $detect['isSafari']) {
-	  $markup = dlts_clip_bitstream_ios_markup($data);
+
+	$identifier = $wrapper->field_identifier->value() ;
+
+	$data = array_shift ( array_values ( $node->field_bitstream[$node->language] ) ) ;
+
+	if ( $detect['isiOS'] || $detect['isSafari'] ) {
+	  $markup = dlts_clip_bitstream_ios_markup ( $data ) ;
 	}
+
 	else {
-	  $markup = dlts_clip_bitstream_markup($data);
+	  $markup = dlts_clip_bitstream_markup ( $data ) ;
 	}
-	drupal_add_js(array('dlts_clip' => array('media' => array($identifier => $data))), 'setting');
-	$node->content['field_bitstream'] = array('#type' => 'markup', '#markup' => $markup);
+
+	drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $identifier => $data )  ) ) , 'setting' ) ;
+
+	$node->content['field_bitstream'] = array ( '#type' => 'markup' , '#markup' => $markup , ) ;
+
 }
 
-function dlts_embed_node_view_dlts_playlist($node) {
-	$types = $media = $references = array();
-	/** load Mobile Detect */
-	$detect = dlts_clip_mobile_detect();
+function dlts_embed_node_view_dlts_playlist ( $node ) {
+
+  /** load Mobile Detect */
+  $detect = dlts_clip_mobile_detect () ;
+
   /** Wrap it with Entity API */
-  $dlts_playlist_wrapper = entity_metadata_wrapper('node', $node);
-  $playlist_identifier = $dlts_playlist_wrapper->field_identifier->value();
-  $playlist_representative_image = $dlts_playlist_wrapper->field_thumbnail->value();
-  $poster = image_style_url('poster', $playlist_representative_image['uri']);
-  $data = array(
-    'identifier' => $playlist_identifier,
-    'poster' => $poster,
-    'type' => $node->type,
-    'stream' => array(),
-  );
-  foreach ($dlts_playlist_wrapper->field_clip_ref->getIterator() as $clip) {
-  	$identifier = $clip->field_identifier->value();
-  	$references[] = $identifier;
-  	$bitstream_ref = $clip->field_bitstream_ref->value();
-    /** Wrap it with Entity API */
-    $wrapper = entity_metadata_wrapper('node', node_load($bitstream_ref->nid));
-  	$bitstream = $bitstream_ref->field_bitstream[$node->language][0];
-  	$media_type = $wrapper->field_media_type->value();
-  	if (empty($media_type)) {
-  	  $media_type = 'unknown';
-  	}
-  	if (!in_array( $media_type, $types)) { 
-  	  $types[] = $media_type; 
-  	}
-  	$bitstream['type'] = $media_type;
-  	$bitstream['start'] = $clip->field_start->value();
-  	$bitstream['duration'] = $clip->field_duration->value();
-  	$representative_image = $clip->field_thumbnail->value();
-  	$bitstream['representative_image'] = array();
-  	foreach (array('poster', 'thumbnail', 'large', 'playlist', 'thumbnails_playlist') as $style) {
-  		$bitstream['representative_image'][$style] = image_style_url($style, $representative_image['uri']);
-  	}
+  $dlts_playlist_wrapper = entity_metadata_wrapper ( 'node', $node ) ;
+
+  $playlist_identifier = $dlts_playlist_wrapper->field_identifier->value() ;
+
+  $playlist_representative_image = $dlts_playlist_wrapper->field_thumbnail->value() ;
+
+  $poster = image_style_url( 'poster' , $playlist_representative_image['uri'] ) ;
+
+  $references = array ( ) ;
+
+  $media = array ( ) ;
+
+  $data = array ( 'identifier' => $playlist_identifier , 'poster' => $poster ) ;
+
+  $data['stream'] = array ( ) ;
+
+  $clips = $dlts_playlist_wrapper->field_clip_ref ;
+
+  foreach ( $clips->getIterator() as $clip ) {
+
+    $representative_image = $clip->field_thumbnail->value() ;
+
+    $thumbnail = image_style_url( 'thumbnail' , $representative_image['uri'] ) ;
+
+    $large = image_style_url( 'large' , $representative_image['uri'] ) ;
+
+    $thumbnails_playlist = image_style_url( 'thumbnails_playlist' , $representative_image['uri'] ) ;
+
+  	$clip_identifier = $clip->field_identifier->value() ;
+
+  	$references[] = $clip_identifier ;
+
+  	$bitstream_ref = $clip->field_bitstream_ref->value() ;
+
+  	$bitstream = $bitstream_ref->field_bitstream[$node->language][0] ;
+
   	$bitstream['representative_image'] = array (
   	  'thumbnail' => $thumbnail,
   	  'large' => $large,
   	  'thumbnails_playlist' => $thumbnails_playlist,
-  	);
+  	) ;
+  	
+  	$bitstream['start'] = $clip->field_start->value() ; 
+  	
+  	$bitstream['duration'] = $clip->field_duration->value() ;  
+
   	/** for now until i get this right */
-  	$data['stream'][$identifier] = $bitstream;
-  	unset($wrapper);
-  }
-  
-  if ($detect['isiOS'] || $detect['isSafari']) {
-  	$markup = dlts_clip_playlist_ios_markup($data);
-  }
-  else {
-  	$markup = dlts_clip_playlist_markup($data);
-  }
-  
-  if (count($types) < 2) $type = array_pop($types);
-  else {
-    $type = 'multimedia';
+  	$data['stream'][$clip_identifier] = $bitstream ;
+
   }
 
-  drupal_add_js(array('dlts_clip' => array('types' => $type, 'playlists' => array($playlist_identifier => $references), 'media' => $data['stream'])), 'setting');
+  if ( $detect['isiOS'] || $detect['isSafari'] ) {
+  	$markup = dlts_clip_playlist_ios_markup ( $data ) ;
+  }
 
-  // render the player as a playlist instead of multiple players
-  // we change the content of this field with the render value needed
-  // to initiate a flowplayer player with a playlist
-  $node->content['field_clip_ref'] = array('#type' => 'markup' , '#markup' => $markup);
+  else {
+
+  	$render_array = dlts_clip_playlist_markup ( array ( 'identifier' => $playlist_identifier , 'type' => $node->type ) ) ;
+
+  	$markup = drupal_render ( $render_array ) ;
+
+  }
+
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'playlists' => array ( $playlist_identifier => $references ), 'media' => $data['stream'] ) ) , 'setting' ) ;
+
+  $node->content['field_clip_ref'] = array ( '#type' => 'markup' , '#markup' => $markup, ) ;
 
 }
 
 /**
  * Implements hook_element_info().
  */
-function dlts_clip_element_info () {
+function dlts_clip_element_info ( ) {
+
   $elements = array();
+
   $elements['dlts_clip_field'] =  array(
     '#input' => TRUE,
   );
+
   return $elements;
+
 }
 
 /**
@@ -524,39 +471,49 @@ function dlts_clip_element_info () {
  *
  * The $fields array is in $complete_form['#field_info'][$element['#field_name']].
  */
-function dlts_clip_field_process($element, $form_state, $complete_form) {
+function dlts_clip_field_process ( $element, $form_state, $complete_form ) {
+
   $settings = &$form_state['field'][$element['#field_name']][$element['#language']]['instance']['settings'];
+
   $element['identifier'] = array(
     '#type' => 'textfield',
     '#title' => t('Identifier'),
     '#required' => TRUE,
     '#default_value' => NULL,
   );
+
   $element['f4m'] = array(
     '#type' => 'varchar',
     '#title' => t('Flash Media Manifest (F4M)'),
     '#required' => TRUE,
     '#default_value' => NULL,
   );
+
   $element['m3u'] = array(
     '#type' => 'varchar',
     '#title' => t('M3U Playlist'),
     '#required' => TRUE,
     '#default_value' => NULL,
   );
+
   $element['pd'] = array(
     '#type' => 'varchar',
     '#title' => t('M3U Playlist'),
     '#required' => TRUE,
     '#default_value' => NULL,
   );
+
   return $element;
+
 }
 
-function dlts_embed_dlts_clip(&$vars) {
+function dlts_embed_dlts_clip ( &$vars ) {
+
   /** Wrap it with Entity API */
   $ewrapper = entity_metadata_wrapper ( 'node', $vars['node'] ) ;
+
   $bitstream_ref = $ewrapper->field_bitstream_ref->value() ;
+
   if ( isset ( $bitstream_ref->nid ) ) {
     /** Wrap it with Entity API */
     $bitstream_wrapper = entity_metadata_wrapper('node', $bitstream_ref);
@@ -565,25 +522,25 @@ function dlts_embed_dlts_clip(&$vars) {
     $identifier = $bitstream_wrapper->field_identifier->value() ;
     drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $identifier => array ( 'url' => $identifier , 'duration' => $duration , 'start' => $start ) ) ) ) , 'setting' ) ;
   }
+
 }
 
 /**
  * Implements hook_entity_info_alter().
  * https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_entity_info_alter/7
  */
-function dlts_clip_entity_info_alter(&$entity_info) {
+function dlts_clip_entity_info_alter ( &$entity_info ) {
   $entity_info['node']['view modes']['embed'] = array(
     'label' => t('Embed mode'),
     'custom settings' => TRUE,
-  );
+  ) ;
 }
 
 /**
  * Implements hook_preprocess_node().
- * Provide template for view mode is "embed"
  * https://api.drupal.org/api/drupal/modules!node!node.module/function/template_preprocess_node/7
  */
-function dlts_clip_preprocess_node(&$vars) {
+function dlts_clip_preprocess_node ( &$vars ) {
   if ($vars['view_mode'] == 'embed') {
     $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__embed';
   }
@@ -593,90 +550,99 @@ function dlts_clip_preprocess_node(&$vars) {
  * Given a node, return the Embed view. Embed view can be customize in manage display section
  * for each Content type e.g., {site}/admin/structure/types/manage/{content-type}/display
  */
-function dlts_clip_embed_display($node) {
-  return node_view($node, 'embed');
+function dlts_clip_embed_display ( $node ) {
+  return node_view ( $node, 'embed' ) ;
 }
 
 /**
  * Theme functions
  */
-function theme_dlts_clip_media($vars) {
-  drupal_add_js(array('dlts_clip' => array('media' => array($vars['identifier'] => $vars))), 'setting');
-  $render_array = dlts_clip_video_markup($vars);
-  return drupal_render($render_array);
+function theme_dlts_clip_media ( $vars ) {
+
+  $vars['type'] = 'dlts_clip';
+
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $vars['identifier'] => $vars ) ) ) , 'setting' ) ;
+
+  $render_array = dlts_clip_video_markup ( $vars['identifier'] , $vars['type'] , $vars ) ;
+
+  return drupal_render ( $render_array ) ;
+
 }
 
-function theme_dlts_clip_media_js ($vars) {
-  drupal_add_js(array('dlts_clip' => array ('media' => array($vars['identifier'] => $vars))), 'setting');
+function theme_dlts_clip_media_js ( $vars ) {
+
+  drupal_add_js ( array ( 'dlts_clip' => array ( 'media' => array ( $vars['identifier'] => $vars ) ) ) , 'setting' ) ;
+
 }
 
-function dlts_clip_video_markup($vars) {
+function dlts_clip_video_markup ( $vars ) {
+
   // HTML markup
   $render_array = array(
     '#type' => 'container',
-	  '#attributes' => array(
-	    'id' => $vars['identifier'],
-	    'data-f4m' => $vars['f4m'],
-	    'data-hsl' => $vars['m3u'],
-	    'class' => array($vars['media_type']),
-	    'data-hsl' => $vars['m3u'],
-	    'class' => array ($vars['type']),
+	'#attributes' => array(
+	  'id' => $vars['identifier'],
+	  'data-f4m' => $vars['f4m'],
+	  'data-hsl' => $vars['m3u'],
+	  'class' => array ( $vars['type'] ),
     ),
-	  'span-0' => array(
-	    '#theme' => 'html_tag',
-	    '#tag' => 'span',
-	    '#value' => '',
-	    '#attributes' => array(
-	      'class' => array('play'),
+	'span-0' => array(
+	  '#theme' => 'html_tag',
+	  '#tag' => 'span',
+	  '#value' => '',
+	  '#attributes' => array(
+	    'class' => array('play'),
         'alt' => t('Play this video')
       ),
     ),
   );
-  return drupal_render($render_array);
+  return $render_array ;
 }
 
+function dlts_clip_playlist_markup ( $vars ) {
 
-function dlts_clip_playlist_markup($vars) {
-	$classes = array();
-	if (isset($vars['media_type'])) {
-		$classes[] = $vars['media_type'];
-	}
-	if (isset($vars['type'])) {
-		$classes[] = $vars['type'];
-	}
   // HTML markup
   $render_array = array(
     '#type' => 'container',
     '#attributes' => array(
       'id' => $vars['identifier'],
-      'class' => $classes,
+      'class' => array ( $vars['type'] ),
     ),
-	  'span-0' => array(
-	    '#theme' => 'html_tag',
-	    '#tag' => 'span',
-	    '#value' => '',
-	    '#attributes' => array(
-	      'class' => array('play'),
-	      'alt' => t('Play this video')
-	    ),
+	'span-0' => array(
+	  '#theme' => 'html_tag',
+	  '#tag' => 'span',
+	  '#value' => '',
+	  '#attributes' => array(
+	    'class' => array('play'),
+	    'alt' => t('Play this video')
 	  ),
+	),
   );
-  return drupal_render($render_array);
+  return $render_array ;
 }
 
-function dlts_clip_playlist_ios_markup($data) {
-	$links = '';
+function dlts_clip_playlist_ios_markup ( $data ) {
+
   $first_video = array_shift ( array_values ( $data['stream'] ) ) ;
+
+  $links = '' ;
+
   $inline_style = '.flowplayer { background-image: url(' . $data['poster'] . '); }' ;
+
   foreach ( $data['stream'] as $stream ) {
+  
   	$links .= l ('', $stream['m3u'], array( 'external' => TRUE, 'attributes' => array ( 'id' => $stream['identifier'] , 'data-duration' => $stream['duration'] , 'data-start' => $stream['start'] , ) ) ) ;
+
   	$inline_style .= '.flowplayer .fp-playlist #' . $stream['identifier'] . ' { background: url(' . $stream['representative_image']['thumbnails_playlist'] . ') no-repeat; }' ;
+
   	$inline_style .= '.flowplayer.is-ready .fp-playlist a#' . $stream['identifier'] . ', .flowplayer.is-loading .fp-playlist a#' . $stream['identifier'] . ' { background: url(' . $stream['representative_image']['thumbnail'] . ') no-repeat; }' ;
+
   }
+
   /** HTML markup */
   $output =
    '<style>' . $inline_style . '</style>
-	  <div id="' . $data['identifier'] . '" data-fullscreen="true" data-duration="'. $first_video['duration'] . '" data-start="'. $first_video['start'] . '" class="dlts_playlist flowplayer is-splash">
+	<div id="' . $data['identifier'] . '" data-fullscreen="true" data-duration="'. $first_video['duration'] . '" data-start="'. $first_video['start'] . '" class="dlts_playlist flowplayer is-splash">
       <video>
         <source type="application/x-mpegurl" src="' . $first_video['m3u'] . '">
       </video>
@@ -684,50 +650,58 @@ function dlts_clip_playlist_ios_markup($data) {
       <a class="fp-next" title="next">&gt;</a>
       <div class="fp-playlist">' . $links . '</div>
     </div>' ;
+
   return $output ;
+
 }
 
-function dlts_clip_clip_markup($data) {
+function dlts_clip_clip_markup ( $data ) {
+
   /** HTML markup */
   $render_array = array (
     '#type' => 'container',
-	  '#attributes' => array (
-	    'id' =>  $data['identifier'],
-	    'data-f4m' => $data['url'],
-	    'class' => array ('dlts_clip', $data['type']),
-	    'style' => 'background-image: url(' . $data['image']['poster'] . ');'
+	'#attributes' => array (
+	  'id' =>  $data['identifier'],
+	  'data-f4m' => $data['url'],
+	  'class' => array ( 'dlts_clip' ),
+	  'style' => 'background-image: url(' . $data['image']['poster'] . ');'
     ),
     'span-0' => array (
       '#theme' => 'html_tag',
-	    '#tag' => 'span',
-	    '#value' => '',
-	    '#attributes' => array (
-	      'class' => array ('play'),
-	      'alt' => t('Play this video')
+	  '#tag' => 'span',
+	  '#value' => '',
+	  '#attributes' => array (
+	    'class' => array ('play'),
+	    'alt' => t('Play this video')
       ),
     ),
   ) ;
-  return drupal_render($render_array);
+
+  return drupal_render ( $render_array ) ;
+
 }
 
 function dlts_clip_clip_ios_markup ( $data ) {
+
   /** HTML markup */
+  
   // While I figure how to get this done right; render arrays are ugly ...
-  $source = array (
+  $source = array ( 
     '#theme' => 'html_tag',
-    '#tag' => 'source',
+    '#tag' => 'source',    
     '#attributes' => array (
       'src' => $data['url'],
-      'type' => 'application/x-mpegurl',
+      'type' => 'application/x-mpegurl',      
     ),
-  );
+  ) ; 
+  
   $render_array = array (
     '#type' => 'container',
       '#attributes' => array (
         'id' =>  $data['identifier'],
         'data-duration' => ( isset ( $data['duration'] ) ? $data['duration'] : 0 ) ,
         'data-start' => ( isset ( $data['start'] ) ? $data['start'] : 0 ) ,
-        'data-fullscreen' => 'true' ,
+        'data-fullscreen' => 'true' ,        
         'class' => array ( 'flowplayer' , 'is-splash' , ) ,
         'style' => 'background-image: url(' . $data['image']['poster'] . ')' ,
       ),
@@ -739,34 +713,39 @@ function dlts_clip_clip_ios_markup ( $data ) {
           'poster' => $data['image']['poster'],
         ),
       ),
-  ) ;
+  ) ; 
+
   return drupal_render ( $render_array ) ;
+
 }
 
-function dlts_clip_bitstream_markup($data) {
+function dlts_clip_bitstream_markup ( $data ) {
+
   /** HTML markup */
-  $render_array = array(
+  $render_array = array (
     '#type' => 'container',
-      '#attributes' => array(
+      '#attributes' => array (
         'id' =>  $data['identifier'],
         'data-f4m' => $data['f4m'],
-        'class' => array($data['media_type']),
+        'class' => array ( 'dlts_clip' ),
       ),
-      'span-0' => array(
+      'span-0' => array (
         '#theme' => 'html_tag',
         '#tag' => 'span',
         '#value' => '',
-        '#attributes' => array(
-          'class' => array('play'),
+        '#attributes' => array (
+          'class' => array ('play'),
           'alt' => t('Play this video')
         ),
       ),
-  );
-  return drupal_render($render_array);
+  ) ;
+
+  return drupal_render ( $render_array ) ;
+
 }
 
-function dlts_clip_bitstream_ios_markup($data) {
-  // make a render array?
+function dlts_clip_bitstream_ios_markup ( $data ) {
+
   /** HTML markup */
   $output = '
     <div id="' . $data['identifier'] . '" data-fullscreen="true" class="flowplayer">
@@ -782,63 +761,146 @@ function dlts_clip_bitstream_ios_markup($data) {
 /**
  * Utility methods
  */
-function dlts_clip_mobile_detect() {
-  include_once libraries_get_path('Browser.php') . '/lib/Browser.php';
+function dlts_clip_mobile_detect ( ) {
+
+  include_once libraries_get_path('Browser.php') . '/lib/Browser.php' ;
+
   $browser = new Browser();
-  $detect = mobile_detect_get_object();
-  return array(
-    'isTablet' => $detect->isTablet(),
-    'isMobile' => $detect->isMobile(),
-    'isiOS' => $detect->isiOS(),
-  	'isSafari' => ($browser->getBrowser() == Browser::BROWSER_SAFARI),
-  );
+
+  $detect = mobile_detect_get_object() ;
+
+  $is_mobile = $detect->isMobile() ;
+
+  $is_tablet = $detect->isTablet() ;
+
+  $is_iOS = $detect->isiOS() ;
+
+  $is_Safari = ( $browser->getBrowser() == Browser::BROWSER_SAFARI ) ;
+
+  return array (
+    'isTablet' => $is_tablet ,
+    'isMobile' => $is_mobile ,
+    'isiOS' => $is_iOS ,
+  	'isSafari' => $is_Safari ,
+  ) ;
+
 }
 
 /**
  * Implements hook_menu_alter.
  * Check access for forum menu item.
- * move this to another place (module)
  */
 function dlts_clip_menu_alter ( &$items ) {
   $items['user/register']['access callback'] = FALSE;
   $items['user/password']['access callback'] = FALSE;
 }
 
+
 /**
  * Themes functions
  */
-function theme_dlts_clip_oembed($arguments) {
+function theme_dlts_clip_oembed ( $arguments ) {
   return '<iframe id="oembed" src="' . $arguments['url'] .'" width="' . $arguments['width'] .'" height="' . $arguments['height'] .'"><p>' . t('Your browser does not support iframes.') . '</p></iframe>';
 }
 
 /**
- * Preprocesses the wrapping HTML.
- * Adds Apple's devices tags
+ * Supports the REST style embed
+ */
+function dlts_clip_embed_using_id ( $node ) {
+  return ( is_object ( $node ) ) ? dlts_clip_embed_response( $node ) : MENU_NOT_FOUND;
+}
+
+/**
+ * Generate a response to a client oEmbed request.
  *
+ * @return
+ *   A keyed array to be converted into JSON
+ *
+ * @todo Test oembed_node for whether it's actually a node
+ */
+function dlts_clip_embed_response ( $node, $pre_response = array() ) {
+
+  $argument_defaults = array(
+    'format' => 'JSON',
+	  'width' => 480,
+	  'height' => 640,
+	  'callback' => '',
+	  'iframe' => TRUE,
+	  'mode' => 'single_page',
+  );
+
+  $ewrapper = entity_metadata_wrapper('node', $node);
+
+  $arguments = array_merge( $argument_defaults, $pre_response );
+
+  $author = t('undefined');
+
+  $author_url = t('undefined');
+
+  /** representitive image */
+  $thumbnail_url = '';
+
+  if ( !empty($arguments['uri']['modified']) ) {
+    $url = url( $arguments['uri']['modified'], array('query' => array ('oembed' => 'true'), 'absolute' => TRUE));
+  }
+  else {
+    $url = url( $arguments['uri']['request'], array('query' => array ('oembed' => 'true')));
+  }
+
+  $response = array(
+    'type' => 'rich',
+    'version' => '1.0',
+    'title' => $ewrapper->title->value(),
+    'author_name' => $author,
+    'author_url' => $author_url,
+    'provider_name' => t('NYU Digital Library Technology Services'),
+    'provider_url' => t('http://dlib.nyu.edu/'),
+    'cache_age' => 86400,
+    'thumbnail_url' => $thumbnail_url,
+    'thumbnail_width' => 100,
+    'thumbnail_height' => 154,
+    'width' => (int) $arguments['width'],
+    'height' => (int) $arguments['height'],
+  );
+
+  if ( $arguments['iframe'] ) {
+    $response['html'] = theme('dlts_clip_oembed', array( 'url' => $url, 'width' => $arguments['width'], 'height' => $arguments['height'] ) );
+  }
+
+  return $response;
+
+}
+
+/**
+ * Preprocesses the wrapping HTML.
  *
  * @param array &$variables
  *   Template variables.
  */
-function dlts_clip_preprocess_html(&$vars) {
-  $meta = array(
-    'apple_mobile_web_app_capable' => array(
-      '#type' => 'html_tag',
-      '#tag' => 'meta',
-      '#attributes' => array(
-        'name' =>  'apple-mobile-web-app-capable',
-        'content' => 'yes',
-      ),
-      'apple_mobile_web_app_status_bar_style' => array(
-        '#type' => 'html_tag',
-        '#tag' => 'meta',
-        '#attributes' => array(
-          'name' => 'apple-mobile-web-app-status-bar-style',
-          'content' => 'black-translucent',
-        )
-      )
-    ),
-  );
-  foreach ($meta as $key => $value) {
-    drupal_add_html_head($value, $key);
-  }
+function dlts_clip_preprocess_html ( &$vars ) {
+
+  $meta = array (
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' =>  'apple-mobile-web-app-capable',
+      'content' => 'yes',
+    )
+  ) ;
+
+  // Add header meta tag for IE to head
+  drupal_add_html_head( $meta , 'apple_mobile_web_app_capable');
+
+  $meta = array (
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' => 'apple-mobile-web-app-status-bar-style',
+      'content' => 'black-translucent',
+    )
+  ) ;
+
+  // Add header meta tag for IE to head
+  drupal_add_html_head( $meta , 'apple_mobile_web_app_status_bar_style');
+
 }
