@@ -86,6 +86,9 @@ function dlts_playable_bitstreams_strongarm() {
       'search_result' => array(
         'custom_settings' => FALSE,
       ),
+      'embed' => array(
+        'custom_settings' => TRUE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -93,7 +96,7 @@ function dlts_playable_bitstreams_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
       ),
       'display' => array(),
@@ -219,7 +222,7 @@ function dlts_playable_bitstreams_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
       ),
       'display' => array(),

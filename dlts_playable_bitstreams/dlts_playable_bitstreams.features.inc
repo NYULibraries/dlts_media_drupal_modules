@@ -7,8 +7,7 @@
 /**
  * Implements hook_ctools_plugin_api().
  */
-function dlts_playable_bitstreams_ctools_plugin_api() {
-  list($module, $api) = func_get_args();
+function dlts_playable_bitstreams_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -17,8 +16,8 @@ function dlts_playable_bitstreams_ctools_plugin_api() {
 /**
  * Implements hook_views_api().
  */
-function dlts_playable_bitstreams_views_api() {
-  return array("version" => "3.0");
+function dlts_playable_bitstreams_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**
@@ -29,30 +28,21 @@ function dlts_playable_bitstreams_image_default_styles() {
 
   // Exported image style: poster.
   $styles['poster'] = array(
-    'name' => 'poster',
     'label' => 'poster',
     'effects' => array(),
   );
 
   // Exported image style: thumbnails_playlist.
   $styles['thumbnails_playlist'] = array(
-    'name' => 'thumbnails_playlist',
     'label' => 'thumbnails_playlist',
     'effects' => array(
       1 => array(
-        'label' => 'Scale and crop',
-        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
-        'effect callback' => 'image_scale_and_crop_effect',
-        'dimensions callback' => 'image_resize_dimensions',
-        'form callback' => 'image_resize_form',
-        'summary theme' => 'image_resize_summary',
-        'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '165',
-          'height' => '165',
+          'width' => 165,
+          'height' => 165,
         ),
-        'weight' => '1',
+        'weight' => 1,
       ),
     ),
   );
@@ -115,5 +105,6 @@ function dlts_playable_bitstreams_node_info() {
       'help' => '',
     ),
   );
+  drupal_alter('node_info', $items);
   return $items;
 }
