@@ -24,3 +24,12 @@
 .stop {
   cursor: pointer;
 }
+
+.dlts_clip.audio {
+  height: 30px;
+}
+.dlts_clip.audio span.play {
+  height: 25px;
+  width: 25px;  
+  background-image: url(../images/play_small.png);
+}

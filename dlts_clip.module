@@ -482,25 +482,32 @@ function dlts_embed_node_view_dlts_playlist ( $node ) {
 
   $data['stream'] = array ( ) ;
 
-  $clips = $dlts_playlist_wrapper->field_clip_ref ;
+  $clips = $dlts_playlist_wrapper->field_clip_ref;
 
   foreach ( $clips->getIterator() as $clip ) {
 
-    $representative_image = $clip->field_thumbnail->value() ;
+    $representative_image = $clip->field_thumbnail->value();
 
-    $thumbnail = image_style_url( 'thumbnail' , $representative_image['uri'] ) ;
+    $thumbnail = image_style_url('thumbnail' , $representative_image['uri']);
 
-    $large = image_style_url( 'large' , $representative_image['uri'] ) ;
+    $large = image_style_url('large' , $representative_image['uri']);
 
-    $thumbnails_playlist = image_style_url( 'thumbnails_playlist' , $representative_image['uri'] ) ;
+    $thumbnails_playlist = image_style_url('thumbnails_playlist' , $representative_image['uri']);
 
-  	$clip_identifier = $clip->field_identifier->value() ;
+  	$clip_identifier = $clip->field_identifier->value();
 
-  	$references[] = $clip_identifier ;
+  	$references[] = $clip_identifier;
 
-  	$bitstream_ref = $clip->field_bitstream_ref->value() ;
+  	$bitstream_ref = $clip->field_bitstream_ref->value();
+  	
+	  /** Wrap it with Entity API */
+  	$bitstream_wrapper = entity_metadata_wrapper('node', $bitstream_ref);
+	
+	  $bitstream_type = $bitstream_wrapper->field_media_type->value();
+	
+  	$bitstream = $bitstream_wrapper->field_bitstream->value();
 
-  	$bitstream = $bitstream_ref->field_bitstream[$node->language][0] ;
+    $bitstream['type'] = $bitstream_type;  	
 
   	$bitstream['representative_image'] = array (
   	  'thumbnail' => $thumbnail,
@@ -513,19 +520,19 @@ function dlts_embed_node_view_dlts_playlist ( $node ) {
   	$bitstream['duration'] = $clip->field_duration->value() ;  
 
   	/** for now until i get this right */
-  	$data['stream'][$clip_identifier] = $bitstream ;
+  	$data['stream'][$clip_identifier] = $bitstream;
 
   }
 
   if ( $detect['isiOS'] || $detect['isSafari'] ) {
-  	$markup = dlts_clip_playlist_ios_markup ( $data ) ;
+  	$markup = dlts_clip_playlist_ios_markup($data);
   }
 
   else {
 
-  	$render_array = dlts_clip_playlist_markup ( array ( 'identifier' => $playlist_identifier , 'type' => $node->type ) ) ;
+  	$render_array = dlts_clip_playlist_markup(array('identifier' => $playlist_identifier, 'type' => $node->type));
 
-  	$markup = drupal_render ( $render_array ) ;
+  	$markup = drupal_render($render_array);
 
   }
 
@@ -683,14 +690,15 @@ function dlts_clip_video_markup($vars) {
   return $render_array ;
 }
 
-function dlts_clip_playlist_markup ( $vars ) {
-  dpm(__FUNCTION__);
+function dlts_clip_playlist_markup($vars) {
+  //dpm(__FUNCTION__);
+  //dpm($vars);
   // HTML markup
   $render_array = array(
     '#type' => 'container',
     '#attributes' => array(
       'id' => $vars['identifier'],
-      'class' => array ( $vars['type'] ),
+      'class' => array($vars['type']),
     ),
 	'span-0' => array(
 	  '#theme' => 'html_tag',

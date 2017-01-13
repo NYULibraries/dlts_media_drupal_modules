@@ -16,11 +16,8 @@
         } ) ;
 
         api.bind("ready", function ( elem ) { 
-         
           var start = $(elem.currentTarget).attr('data-start') ;
-          
           if ( start ) api.seek ( start ) ;
-          
         } ) ;  
  
       });    
@@ -57,65 +54,48 @@
         }      
       } ;
       
-      function clipConf ( stream ) {
-        
-        var conf = { } ;
-        
-        conf.scaling = 'fit' ;
-        
-        conf.provider = 'rtmp' ,
-        
-        conf.urlResolvers = [ 'f4m' , 'bwcheck' ] ;        	
-        
-        conf.url = stream.f4m ;
-        
-        conf.start = stream.start ;
-        
-        conf.duration = stream.duration ;
-        
-        return conf ;
-
+      function clipConf(stream) {
+        var conf = {};
+            conf.scaling = 'fit';
+            conf.provider = 'rtmp';
+            conf.urlResolvers = [ 'f4m' , 'bwcheck' ];
+            conf.url = stream.f4m;
+            conf.start = stream.start;
+            conf.duration = stream.duration;
+        if (stream.type == 'audio') {
+          conf.fullscreen = false;
+          conf.height = 30;
+          conf.autoHide = false;
+        }
+        return conf;
       }
-      
-      if ( detect.isiOS || detect.isSafari ) { }
-      
+      if ( detect.isiOS || detect.isSafari ) {}
       else {
-	
-        $('.dlts_clip').each ( function ( ) {
-    	 
-       var conf ;
-
-       var id = $(this).attr('id') ;
-       
-       var clip = clipConf ( settings.dlts_clip.media[id] ) ;
-       
-       conf = { id : id , key : player_conf.key , plugins: plugins , clip: clip } ;
-
-       $f ( conf.id, player_conf.url, conf ) ;
-
-     } ) ;
-     
-     $('.dlts_playlist').each ( function ( ) {
-    	 
-         var conf = {} ;
-
-         var id = $(this).attr('id') ;
-         
-         conf.playlist = [] ;
-         
-         $.each ( settings.dlts_clip.playlists[id] , function ( index, value ) {
-           conf.playlist.push ( clipConf ( settings.dlts_clip.media[value] ) ) ;
-         } ) ;
-         
-         conf = { id : id , key : player_conf.key , plugins : plugins , playlist : conf.playlist } ;
-         
-         $f ( conf.id, player_conf.url, conf ) ;
-
-     } ) ;     
-      
+        $('.dlts_clip').each(function() {
+          var conf;
+          var id = $(this).attr('id');
+          var clip = clipConf(settings.dlts_clip.media[id]);
+              conf = { id : id , key : player_conf.key , plugins: plugins, clip: clip };
+          if (settings.dlts_clip.media[id].type == 'audio') {
+            conf.plugins.controls.fullscreen = false;
+            conf.plugins.controls.autoHide = false;            
+            conf.plugins.controls.height = 30;
+          }
+          $f(conf.id, player_conf.url, conf);
+        });     
+       $('.dlts_playlist').each(function() {
+         console.log('estamos aqui @ playlist')
+         var conf = {};
+         var id = $(this).attr('id');
+         conf.playlist = [];
+         $.each(settings.dlts_clip.playlists[id], function(index, value) {
+           conf.playlist.push(clipConf(settings.dlts_clip.media[value]));
+         });
+         conf = { id : id , key : player_conf.key , plugins : plugins , playlist : conf.playlist };
+         console.log(conf.playlist)
+         $f(conf.id, player_conf.url, conf);
+       });
+      }
     }
-    
-    }
-    
   }
 })(jQuery);
