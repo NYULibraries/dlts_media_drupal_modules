@@ -136,15 +136,6 @@ function dlts_playable_bitstreams_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: administer dlts utilities.
-  $permissions['administer dlts utilities'] = array(
-    'name' => 'administer dlts utilities',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'dlts_utilities',
-  );
-
   // Exported permission: administer features.
   $permissions['administer features'] = array(
     'name' => 'administer features',

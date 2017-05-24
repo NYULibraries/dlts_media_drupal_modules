@@ -167,6 +167,13 @@ function dlts_clip_menu () {
     'access arguments' => array('access administration pages'),
     'file' => 'inc/dlts_clip.admin.inc',
     ),
+    'content/%/nodeid' => array(
+		  'title' => 'Experimenting with node loading',
+		  'page callback' => 'dlts_clip_return_nodeid_json',
+		  'page arguments' => array(1),
+		  'access arguments' => array('access content'),
+		  'type' => MENU_CALLBACK,
+	  ),
   );
 }
 
@@ -176,14 +183,14 @@ function dlts_clip_menu () {
  */
 function dlts_clip_custom_theme () {
 
-  return 'rubik'; // while I develop
-
   /** Get the arguments from Drupal path */
   $arg = arg();
   /** count should be eq 4. we want to match /{resource}/{identifier}/mode/embed */
   $count = count($arg);
   /** we have 4 arguments and they match a embed request; return embed theme instead of the default */
   if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode') return 'dlts_embed';
+
+  else return 'rubik';
 }
 
 /**
@@ -807,7 +814,9 @@ function dlts_clip_playlist_markup ($data) {
   	$links .= l('', $m3u, array(
   	  'external' => TRUE, 
   	  'attributes' => array(
-  	    'id' => $identifier, 'data-duration' => $duration, 'data-start' => $start
+  	    'id' => $identifier, 
+        'data-duration' => $duration, 
+        'data-start' => $start
   	    )
   	  )
   	);
@@ -834,10 +843,7 @@ function dlts_clip_playlist_markup ($data) {
 }
 
 function dlts_clip_markup ($data) {
-
   /** HTML markup */
-
-  // While I figure how to get this done right; render arrays are ugly ...
   $source = array( 
     '#theme' => 'html_tag',
     '#tag' => 'source',    
@@ -845,8 +851,7 @@ function dlts_clip_markup ($data) {
       'src' => $data['url'],
       'type' => 'application/x-mpegurl',      
     ),
-  );
-  
+  );  
   $render_array = array(
     '#type' => 'container',
       '#attributes' => array(
@@ -911,37 +916,34 @@ function dlts_clip_preprocess_html (&$vars) {
   }
 }
 
-/**
- * Utility methods
- */
 function dlts_clip_mobile_detect () {
-  
   $detect = &drupal_static('detect');
-  
   if (!isset($detect)) {
-
+    dpm('If detect was false');
     include_once libraries_get_path('Browser.php') . '/lib/Browser.php' ;
-
     $browser = new Browser();
-
     $detect = mobile_detect_get_object();
-
-    $is_mobile = $detect->isMobile();
-
-    $is_tablet = $detect->isTablet();
-
-    $is_iOS = $detect->isiOS();
-
-    $is_Safari = ($browser->getBrowser() == Browser::BROWSER_SAFARI);
-
     $detect = array(
-      'isTablet' => $is_tablet,
-      'isMobile' => $is_mobile,
-      'isiOS' => $is_iOS,
-  	  'isSafari' => $is_Safari,
+      'isTablet' => $detect->isTablet(),
+      'isMobile' => $detect->isMobile(),
+      'isiOS' => $detect->isiOS(),
+  	  'isSafari' => ($browser->getBrowser() == Browser::BROWSER_SAFARI),
     );  
   }
-
   return $detect;
+}
 
+function dlts_clip_return_nodeid_json ($id) {
+	$query = new EntityFieldQuery();
+ 	$query->entityCondition('entity_type', 'node', '=')
+     ->fieldCondition('field_identifier', 'value', $id, '=');
+ 	$result = $query->execute();
+	$nodeids = array();
+	if (isset($result['node'])) {
+		foreach ($result['node'] as $node) {
+			$nodeids[] = $node->nid;
+		}
+	}
+	echo drupal_json_encode($nodeids);	
+	die;
 }
