@@ -470,6 +470,8 @@ function dlts_clip_preprocess_page(&$variables) {
           drupal_add_css('//releases.flowplayer.org/7.0.4/skin/skin.css', 'external');
           /** Flowplayer JavaScript */
           drupal_add_js('//releases.flowplayer.org/7.0.4/flowplayer.min.js', 'external');
+          /** The hlsjs plugin for playback of HLS without Flash in modern browsers */
+          drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
   	      break;
       }      
     }
