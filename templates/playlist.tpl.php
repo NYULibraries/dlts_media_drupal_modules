@@ -6,10 +6,15 @@
   data-start="<?php print $start ?>" 
   data-fullscreen="true"
 >
-  <video preload="none">
+ <!-- initial clip -->
+  <video poster="<?php print $poster ?>">
     <source type="application/x-mpegurl" src="<?php print $m3u ?>">
   </video>
-  <a class="fp-prev" title="prev">&lt;</a>
-  <a class="fp-next" title="next">&gt;</a>
-  <div class="fp-playlist"><?php print $links ?></div>
+  <!-- playlist root -->
+  <div class="fp-playlist">
+    <?php print $links ?>
+  </div>
+  <!-- optional prev/next buttons -->
+  <a class="fp-prev" title="prev"></a>
+  <a class="fp-next" title="next"></a> 
 </div>

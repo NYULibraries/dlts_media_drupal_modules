@@ -1,6 +1,5 @@
 ;(function ($) {
   function attach (context, settings) {
-    return;
     flowplayer(function (api, root) {
       var parent = $(root);
       $('.fp-playlist a').click(function () {
