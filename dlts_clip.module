@@ -1,9 +1,131 @@
 <?php
 
-module_load_include('inc', 'dlts_clip', 'inc/loaders');
-
 /** Player helper */
-module_load_include('inc', 'dlts_clip', 'inc/flowplayer');
+// module_load_include('inc', 'dlts_clip', 'inc/flowplayer');
+
+
+/**
+ * A wildcard loader for dlts_clip nodes, using the clip identifier.
+ *
+ * @parameter $identifier
+ *  The value of field_identifier for a dlts_clip node.
+ *
+ * @return
+ * A node object with the given value for field_identifier.
+ *
+ * @todo
+ * field_identifier is supposed to be unique across all books, but we do
+ * no checking of this assumption.
+ * @todo
+ * Does the query need to be tagged as node_access? We're checking node_access
+ * via the menu system, but since the loader is called before access is
+ * checked, adding a check here might save an entity_load if the user's not
+ * going to have access anyway, at the cost of an extra JOIN here.
+ */
+function dlts_clip_load ($identifier) {
+
+  $query = new EntityFieldQuery;
+
+  $identifier = filter_xss($identifier);
+
+  $result = $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'dlts_clip')
+    ->propertyCondition('status', 1)
+    ->fieldCondition('field_identifier', 'value', $identifier, '=')
+    ->addTag('node_access')
+    ->execute();
+
+  if (!empty($result['node'])) {
+  	$keys = array_keys($result['node']);
+  	return node_load(array_pop($keys));
+  }
+
+  return FALSE;
+
+}
+
+/**
+ * A wildcard loader for dlts_creativework nodes, using the CreativeWork identifier.
+ *
+ * @parameter $identifier
+ *  The value of field_identifier for a dtls_creativework node.
+ *
+ * @return
+ * A node object with the given value for field_identifier.
+ *
+ * @todo
+ * field_identifier is supposed to be unique across all CreativeWork, but we do
+ * no checking of this assumption.
+ * @todo
+ * Does the query need to be tagged as node_access? We're checking node_access
+ * via the menu system, but since the loader is called before access is
+ * checked, adding a check here might save an entity_load if the user's not
+ * going to have access anyway, at the cost of an extra JOIN here.
+ */
+function dlts_creativework_load ( $identifier ) {
+
+  $query = new EntityFieldQuery;
+
+  $identifier = filter_xss($identifier);
+
+  $result = $query
+  	->entityCondition('entity_type', 'node')
+  	->entityCondition('bundle', 'dlts_creativework')
+  	->propertyCondition('status', 1)
+  	->fieldCondition('field_identifier', 'value', $identifier, '=')
+  	->addTag('node_access')
+  	->execute();
+
+  if ( !empty($result['node']) ) {
+    $keys = array_keys($result['node']);
+  	return node_load(array_pop($keys));
+  }
+
+  return FALSE;
+
+}
+
+/**
+ * A wildcard loader for dlts_playlist nodes, using the playlist identifier.
+ *
+ * @parameter $identifier
+ *  The value of field_identifier for a dlts_playlist node.
+ *
+ * @return
+ * A node object with the given value for field_identifier.
+ *
+ * @todo
+ * field_identifier is supposed to be unique across all playlist, but we do
+ * no checking of this assumption.
+ * @todo
+ * Does the query need to be tagged as node_access? We're checking node_access
+ * via the menu system, but since the loader is called before access is
+ * checked, adding a check here might save an entity_load if the user's not
+ * going to have access anyway, at the cost of an extra JOIN here.
+ */
+function dlts_playlist_load ( $identifier ) {
+
+  $query = new EntityFieldQuery;
+
+  $identifier = filter_xss($identifier);
+
+  $result = $query
+   	->entityCondition('entity_type', 'node')
+   	->entityCondition('bundle', 'dlts_playlist')
+   	->propertyCondition('status', 1)
+   	->fieldCondition('field_identifier', 'value', $identifier, '=')
+   	->addTag('node_access')
+   	->execute();
+
+  if (!empty($result['node'])) {
+    $keys = array_keys($result['node']);
+   	return node_load(array_pop($keys));
+  }
+
+  return FALSE;
+
+}
 
 /**
  * Implements hook_menu().
@@ -76,7 +198,7 @@ function dlts_clip_field_info () {
  * Implements hook_theme().
  */
 function dlts_clip_theme ($existing, $type, $theme, $path) {  
-  return array(    
+  return array(
     'dlts_clip_video' => array(
       'template' => 'templates/video',
       'variables' => array(
@@ -84,6 +206,16 @@ function dlts_clip_theme ($existing, $type, $theme, $path) {
         'identifier' => NULL,
       ),
     ),
+    'dlts_clip_playlist' => array(
+      'template' => 'templates/playlist',
+      'variables' => array(
+        'm3u' => NULL,
+        'duration' => NULL,
+        'start' => 0,
+        'classes' => array(),
+        'links' => NULL,
+      ),
+    ),   
     'dlts_clip_media' => array (
       'variables' => array (
       	'identifier' => NULL,
@@ -93,14 +225,6 @@ function dlts_clip_theme ($existing, $type, $theme, $path) {
       	'pd' => NULL,
       ),
     ),
-    'dlts_clip_media_js' => array (
-  	  'variables' => array (
-  		'identifier' => NULL,
-  		'f4m' => NULL,
-  		'm3u' => NULL,
-  		'pd' => NULL,
-  	  ),
-  	),
     array (
       'dlts_clip_oembed' => array(
         'template' => 'templates/oembed',
@@ -395,7 +519,7 @@ function dlts_embed_node_view_dlts_playlist ($node) {
 
   }
 
-  $markup = dlts_clip_playlist_ios_markup($data);
+  $markup = dlts_clip_playlist_markup($data);
 
   $node->content['field_clip_ref'] = array('#type' => 'markup', '#markup' => $markup);
 
@@ -511,10 +635,13 @@ function dlts_clip_embed_display ($node) {
  */
 function theme_dlts_clip_media ($vars) {
 
-  $identifier = $vars['identifier'];
-
   $type = 'dlts_clip';
+
+  $identifier = $vars['identifier'];
   
+  $vars['type'] = $type;  
+  
+  /**
   drupal_add_js(
     array(
       'dlts_clip' => array(
@@ -523,35 +650,23 @@ function theme_dlts_clip_media ($vars) {
       )
     )
   ), 'setting');
+  */
 
-  $render_array = dlts_clip_video_markup($identifier, $type, $vars);
+  $render_array = dlts_clip_video_markup($vars);
 
   return drupal_render($render_array);
 
 }
 
-function theme_dlts_clip_media_js ($vars) {
-  drupal_add_js(
-    array(
-      'dlts_clip' => array(
-        'media' => array(
-          $vars['identifier'] => $vars
-        )
-      )
-    ), 'setting');
-}
-
 function dlts_clip_video_markup ($vars) {
-  $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : null;
-  $f4m = (isset($vars['f4m'])) ? $vars['f4m'] : null;
-  $m3u = (isset($vars['m3u'])) ? $vars['m3u'] : null;
+  $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : NULL;
+  $m3u = (isset($vars['m3u'])) ? $vars['m3u'] : NULL;
   $class = (isset($vars['type'])) ? array($vars['type']) : array();
   // HTML markup
   $render_array = array(
     '#type' => 'container',
 	  '#attributes' => array(
 	    'id' => $identifier,
-	    'data-f4m' => $f4m,
 	    'data-hsl' => $m3u,
 	    'class' => $class,
     ),
@@ -568,7 +683,7 @@ function dlts_clip_video_markup ($vars) {
   return $render_array;
 }
 
-function dlts_clip_playlist_ios_markup ($data) {
+function dlts_clip_playlist_markup ($data) {
 
   $links = '';
 
@@ -614,19 +729,17 @@ function dlts_clip_playlist_ios_markup ($data) {
 
   }
 
-  /** HTML markup */
-  $output =
-   '<style>' . $inline_style . '</style>
-	 <div id="' . $identifier . '" data-fullscreen="true" data-duration="'. $first_video_duration . '" data-start="'. $first_video_start . '" class="dlts_playlist flowplayer is-splash">
-     <video>
-       <source type="application/x-mpegurl" src="' . $first_video_m3u . '">
-     </video>
-     <a class="fp-prev" title="prev">&lt;</a>
-     <a class="fp-next" title="next">&gt;</a>
-     <div class="fp-playlist">' . $links . '</div>
-   </div>';
-
-  return $output;
+  $data = array(
+    'style' => $inline_style,
+    'identifier' => $identifier,
+    'duration' => $first_video_duration,
+    'start' => $first_video_start,
+    'classes' => array('dlts_playlist', 'flowplayer', 'is-splash'),
+    'm3u' => $first_video_m3u,
+    'links' => $links,
+  );
+  
+  return theme('dlts_clip_playlist', $data);
 
 }
 
