@@ -285,6 +285,16 @@ function dlts_clip_field_attribute_property_get ($data, array $options, $name, $
  * Implements hook_theme().
  */
 function dlts_clip_theme ($existing, $type, $theme, $path) {  
+
+  // $items = array();
+  // Content theming.
+  // $items['node'] = array(
+  //   'path' => drupal_get_path('theme', 'dlts_embed') .'/templates',
+  //   'template' => 'object',
+  // );
+  // $items['node']['template'] = 'node';
+  // return $items;
+
   return array(
     'dlts_clip_video' => array(
       'template' => 'templates/video',
@@ -687,16 +697,22 @@ function dlts_clip_field_process ( $element, $form_state, $complete_form ) {
 }
 
 function dlts_embed_dlts_clip (&$vars) {
-  /** Wrap it with Entity API */
   $ewrapper = entity_metadata_wrapper('node', $vars['node']);
   $bitstream_ref = $ewrapper->field_bitstream_ref->value();
   if (isset($bitstream_ref->nid)) {
-    /** Wrap it with Entity API */
     $bitstream_wrapper = entity_metadata_wrapper('node', $bitstream_ref);
-    $duration = (int) $ewrapper->field_duration->value();
-    $start = (int) $ewrapper->field_start->value();
-    $identifier = $bitstream_wrapper->field_identifier->value();
-    drupal_add_js(array('dlts_clip' => array('media' => array($identifier => array('url' => $identifier, 'duration' => $duration, 'start' => $start)))), 'setting');
+    $configuration = array(
+      'dlts_clip' => array(
+        'media' => array(
+          $identifier => array(
+            'url' => $bitstream_wrapper->field_identifier->value(), 
+            'duration' => (int) $ewrapper->field_duration->value(), 
+            'start' => (int) $ewrapper->field_start->value(),
+          )
+        )
+      )
+    );
+    drupal_add_js($configuration, 'setting');
   }
 }
 
