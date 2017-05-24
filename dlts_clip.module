@@ -919,7 +919,6 @@ function dlts_clip_preprocess_html (&$vars) {
 function dlts_clip_mobile_detect () {
   $detect = &drupal_static('detect');
   if (!isset($detect)) {
-    dpm('If detect was false');
     include_once libraries_get_path('Browser.php') . '/lib/Browser.php' ;
     $browser = new Browser();
     $detect = mobile_detect_get_object();
