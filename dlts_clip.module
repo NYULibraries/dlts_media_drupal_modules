@@ -478,10 +478,14 @@ function dlts_clip_preprocess_page(&$variables) {
           drupal_add_js(array('dlts_clip' => array('detect' => $detect)), 'setting');
           /** Flowplayer CSS */
           drupal_add_css('//releases.flowplayer.org/7.0.4/skin/skin.css', 'external');
+          /** Flowplayer HTML5 audio plugin: CSS */
+          drupal_add_css('//releases.flowplayer.org/audio/flowplayer.audio.css', 'external');
           /** Flowplayer JavaScript */
           drupal_add_js('//releases.flowplayer.org/7.0.4/flowplayer.min.js', 'external');
           /** The hlsjs plugin for playback of HLS without Flash in modern browsers */
           drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
+          /** Audio plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
+          drupal_add_js('//releases.flowplayer.org/audio/flowplayer.audio.min.js', 'external');
   	      break;
       }      
     }

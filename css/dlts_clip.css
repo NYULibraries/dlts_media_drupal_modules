@@ -24,3 +24,9 @@
 .stop {
   cursor: pointer;
 }
+
+/* icecast player */
+#icecast {
+  width: 400px;
+  background-color: #eee;
+}
