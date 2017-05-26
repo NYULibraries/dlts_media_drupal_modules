@@ -9,7 +9,7 @@
  * Implements hook_field_schema().
  * https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_schema/7
  */
-function dlts_clip_field_schema ($field) {
+function dlts_clip_field_schema($field) {
   return array(
     'columns' => array(
       'identifier' => array(

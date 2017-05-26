@@ -2,10 +2,13 @@
 <div 
   id="<?php print $identifier ?>"
   class="dlts_playlist flowplayer is-splash"
+  data-title="<?php print $identifier ?>"
   data-duration="<?php print $duration ?>" 
   data-start="<?php print $start ?>" 
   data-fullscreen="true"
->
+  data-type="<?php print $type ?>"
+  <?php if ($type == 'audio') : ?>data-audio-only="true"<?php endif ?>
+  >
  <!-- initial clip -->
   <video poster="<?php print $poster ?>">
     <source type="application/x-mpegurl" src="<?php print $m3u ?>">
