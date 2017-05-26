@@ -15,11 +15,6 @@ module_load_include('inc', 'dlts_clip', 'inc/flowplayer');
  * @todo
  * field_identifier is supposed to be unique across all books, but we do
  * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
  */
 function dlts_clip_load($identifier) {
 
@@ -39,9 +34,7 @@ function dlts_clip_load($identifier) {
     $keys = array_keys($result['node']);
     return node_load(array_pop($keys));
   }
-
   return FALSE;
-
 }
 
 /**
@@ -56,11 +49,6 @@ function dlts_clip_load($identifier) {
  * @todo
  * field_identifier is supposed to be unique across all CreativeWork, but we do
  * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
  */
 function dlts_creativework_load($identifier) {
 
@@ -97,11 +85,6 @@ function dlts_creativework_load($identifier) {
  * @todo
  * field_identifier is supposed to be unique across all playlist, but we do
  * no checking of this assumption.
- * @todo
- * Does the query need to be tagged as node_access? We're checking node_access
- * via the menu system, but since the loader is called before access is
- * checked, adding a check here might save an entity_load if the user's not
- * going to have access anyway, at the cost of an extra JOIN here.
  */
 function dlts_playlist_load($identifier) {
 
@@ -126,6 +109,9 @@ function dlts_playlist_load($identifier) {
 
 }
 
+/**
+ * Implements hook_init().
+ */
 function dlts_clip_init() {
   drupal_add_http_header('Access-Control-Allow-Origin', '*');
 }
@@ -182,14 +168,12 @@ function dlts_clip_menu() {
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_custom_theme/7
  */
 function dlts_clip_custom_theme() {
-
   /** Get the arguments from Drupal path */
   $arg = arg();
   /** count should be eq 4. we want to match /{resource}/{identifier}/mode/embed */
   $count = count($arg);
   /** we have 4 arguments and they match a embed request; return embed theme instead of the default */
   if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode') return 'dlts_embed';
-
   else return 'rubik';
 }
 
@@ -545,8 +529,12 @@ function dlts_embed_node_view_dlts_clip($node) {
     'duration' => $duration,
     'identifier' => $bitstreamId,
     'start' => $start,
-    'url' => $m3u,
+    'm3u' => $m3u,
     'type' => $bitstream_type,
+    'poster' => $ri['poster'],
+    'style' => '',
+    'links' => '',
+    'classes' => array(),
   );
 
   $configuration = array(
@@ -563,7 +551,7 @@ function dlts_embed_node_view_dlts_clip($node) {
 
   $node->content['field_bitstream_ref'] = array(
     '#type' => 'markup', 
-    '#markup' => dlts_clip_markup($data) // theme('dlts_clip_video', $data)
+    '#markup' => theme('dlts_clip_video', $data),
   );
 
   drupal_add_js($configuration, 'setting');
@@ -877,41 +865,6 @@ function dlts_clip_playlist_markup($data) {
   if ($count > 1) return theme('dlts_clip_playlist', $data);
   
   else return theme('dlts_clip_video', $data);
-
-}
-
-function dlts_clip_markup($data) {
-  /** HTML markup */
-  $source = array( 
-    '#theme' => 'html_tag',
-    '#tag' => 'source',    
-    '#attributes' => array(
-      'src' => $data['url'],
-      'type' => 'application/x-mpegurl',      
-    ),
-  );  
-  $render_array = array(
-    '#type' => 'container',
-      '#attributes' => array(
-        'id' =>  $data['identifier'],
-        'data-duration' => (isset($data['duration']) ? $data['duration'] : 0),
-        'data-start' => (isset($data['start']) ? $data['start'] : 0),
-        'data-fullscreen' => 'true',        
-        'class' => array('flowplayer' , 'is-splash', ),
-        'style' => 'background-image: url(' . $data['image']['poster'] . ')',
-        'poster' => $data['image']['poster'],
-      ),
-      'video-0' => array(
-        '#theme' => 'html_tag',
-        '#tag' => 'video',
-        '#value' => drupal_render($source),
-        '#attributes' => array (
-          'poster' => $data['image']['poster'],
-        ),
-      ),
-  ) ; 
-
-  return drupal_render($render_array);
 
 }
 
