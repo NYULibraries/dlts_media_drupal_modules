@@ -17,11 +17,8 @@ module_load_include('inc', 'dlts_clip', 'inc/flowplayer');
  * no checking of this assumption.
  */
 function dlts_clip_load($identifier) {
-
   $query = new EntityFieldQuery;
-
   $identifier = filter_xss($identifier);
-
   $result = $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'dlts_clip')
@@ -29,7 +26,6 @@ function dlts_clip_load($identifier) {
     ->fieldCondition('field_identifier', 'value', $identifier, '=')
     ->addTag('node_access')
     ->execute();
-
   if (!empty($result['node'])) {
     $keys = array_keys($result['node']);
     return node_load(array_pop($keys));
@@ -51,11 +47,8 @@ function dlts_clip_load($identifier) {
  * no checking of this assumption.
  */
 function dlts_creativework_load($identifier) {
-
   $query = new EntityFieldQuery;
-
   $identifier = filter_xss($identifier);
-
   $result = $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'dlts_creativework')
@@ -63,14 +56,11 @@ function dlts_creativework_load($identifier) {
     ->fieldCondition('field_identifier', 'value', $identifier, '=')
     ->addTag('node_access')
     ->execute();
-
   if (!empty($result['node'])) {
     $keys = array_keys($result['node']);
     return node_load(array_pop($keys));
   }
-
   return FALSE;
-
 }
 
 /**
@@ -87,11 +77,8 @@ function dlts_creativework_load($identifier) {
  * no checking of this assumption.
  */
 function dlts_playlist_load($identifier) {
-
   $query = new EntityFieldQuery;
-
   $identifier = filter_xss($identifier);
-
   $result = $query
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', 'dlts_playlist')
@@ -99,14 +86,11 @@ function dlts_playlist_load($identifier) {
     ->fieldCondition('field_identifier', 'value', $identifier, '=')
     ->addTag('node_access')
     ->execute();
-
   if (!empty($result['node'])) {
     $keys = array_keys($result['node']);
     return node_load(array_pop($keys));
   }
-
   return FALSE;
-
 }
 
 /**
@@ -152,15 +136,14 @@ function dlts_clip_menu() {
     'page arguments' => array('dlts_clip_player_flowplayer_config'),
     'access arguments' => array('access administration pages'),
     'file' => 'inc/dlts_clip.admin.inc',
-    ),
-    'content/%/nodeid' => array(
-      'title' => 'Experimenting with node loading',
-      'page callback' => 'dlts_clip_return_nodeid_json',
-      'page arguments' => array(1),
-      'access arguments' => array('access content'),
-      'type' => MENU_CALLBACK,
-    ),
-  );
+  ),
+  'content/%/nodeid' => array(
+    'title' => 'Experimenting with node loading',
+    'page callback' => 'dlts_clip_return_nodeid_json',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  ));
 }
 
 /**
@@ -173,8 +156,9 @@ function dlts_clip_custom_theme() {
   /** count should be eq 4. we want to match /{resource}/{identifier}/mode/embed */
   $count = count($arg);
   /** we have 4 arguments and they match a embed request; return embed theme instead of the default */
-  if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode') return 'dlts_embed';
-  else return 'rubik';
+  //if ( $count > 3 && $arg[$count - 1] === 'embed' && $arg[$count - 2] === 'mode') return 'dlts_embed';
+  //else return 'rubik';
+  return 'rubik';
 }
 
 /**
@@ -230,6 +214,8 @@ function dlts_clip_field_item_create() {
  */
 function dlts_clip_field_item_property_info() {
 
+  $properties = array();
+
   $properties['identifier'] = array(
     'type' => 'varchar',
     'label' => t('Object identifier'),
@@ -270,38 +256,39 @@ function dlts_clip_field_attribute_property_get($data, array $options, $name, $t
  */
 function dlts_clip_theme($existing, $type, $theme, $path) {  
 
-  // $items = array();
+  $items = array();
+  
   // Content theming.
-  // $items['node'] = array(
-  //   'path' => drupal_get_path('theme', 'dlts_embed') .'/templates',
-  //   'template' => 'object',
-  // );
-  // $items['node']['template'] = 'node';
-  // return $items;
-
-  return array(
-    'dlts_clip_video' => array(
-      'template' => 'templates/video',
-      'variables' => array(
-        'm3u' => NULL,
-        'identifier' => NULL,
-        'type' => NULL,
-        'start' => 0,
-        'duration' => 0,
-        'poster' => NULL,
-      ),
+  //$items['node'] = array(
+   //'path' => $path . '/templates',
+   //'template' => 'object',
+  //);
+  //$items['node']['template'] = 'node';
+  
+  $items['dlts_clip_video'] = array(
+    'template' => 'templates/video',
+    'variables' => array(
+      'm3u' => NULL,
+      'identifier' => NULL,
+      'type' => NULL,
+      'start' => 0,
+      'duration' => 0,
+      'poster' => NULL,
     ),
-    'dlts_clip_playlist' => array(
-      'template' => 'templates/playlist',
-      'variables' => array(
-        'm3u' => NULL,
-        'duration' => NULL,
-        'start' => 0,
-        'classes' => array(),
-        'links' => NULL,
-      ),
-    ),   
-    'dlts_clip_media' => array(
+  );
+
+  $items['dlts_clip_playlist'] = array(
+    'template' => 'templates/playlist',
+    'variables' => array(
+      'm3u' => NULL,
+      'duration' => NULL,
+      'start' => 0,
+      'classes' => array(),
+      'links' => NULL,
+    ),
+  );
+
+  $items['dlts_clip_media'] = array(
       'variables' => array(
         'identifier' => NULL,
         'f4m' => NULL,
@@ -309,19 +296,56 @@ function dlts_clip_theme($existing, $type, $theme, $path) {
         'm3u' => NULL,
         'pd' => NULL,
       ),
-    ),
-    array(
-      'dlts_clip_oembed' => array(
-        'template' => 'templates/oembed',
-        'variables' => array(
-          'url' => NULL,
-          'width' => NULL,
-          'height' => NULL,
-          'message' => t('Your browser does not support iframes.'),
-        ),
-      ),
+  );
+
+  $items['dlts_clip_oembed'] = array(
+    'template' => 'templates/oembed',
+    'variables' => array(
+      'url' => NULL,
+      'width' => NULL,
+      'height' => NULL,
+      'message' => t('Your browser does not support iframes.'),
     ),
   );
+
+  $items['html__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/html.embed',
+  );
+
+  $items['node__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/node.embed',
+  );
+
+  $items['page__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/page.embed',
+  );
+
+  $items['region__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/region.embed',
+  );
+
+  $items['block__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/block.embed',
+  );
+
+  $items['field__embed'] = array(
+    'render element' => 'content',
+    'base hook' => 'page',
+    'template' => 'templates/field.embed',
+  );
+
+  return $items;
+
 }
 
 /**
@@ -331,7 +355,7 @@ function dlts_clip_field_validate($entity_type, $entity, $field, $instance, $lan
   foreach ($items as $delta => $item) {
     if (!empty($item['identifier'])) {
       if (!preg_match('/[0-9a-zA-Z_-]/', $item['identifier'])) {
-        $errors[$field['field_name']][$langcode][$delta][] = array( 'error' => 'Clip identifier invalid');
+        $errors[$field['field_name']][$langcode][$delta][] = array( 'error' => 'Clip identifier invalid.');
       }
     }
   }
@@ -451,33 +475,58 @@ function dlts_clip_field_widget_form(&$form, &$form_state, $field, $instance, $l
   return $element;
 }
 
+function dlts_clip_preprocess_region(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'region__embed';
+}
+
+function dlts_clip_preprocess_block(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'block__embed';
+}
+
+function dlts_clip_preprocess_field(&$variables, $hook) {
+  $variables['theme_hook_suggestions'][] = 'field__embed';
+}
+
+function dlts_clip_add_js() {
+  /** Let the client know more about the browser */
+  drupal_add_js(
+    array(
+      'dlts_clip' => array(
+        'detect' => dlts_clip_mobile_detect() /** Load Mobile Detect */
+      )
+    ), 'setting'
+  );
+  /** Flowplayer CSS */
+  drupal_add_css('//releases.flowplayer.org/7.0.4/skin/skin.css', 'external');
+  /** Flowplayer HTML5 audio plugin: CSS */
+  drupal_add_css('//releases.flowplayer.org/audio/flowplayer.audio.css', 'external');
+  /** Flowplayer JavaScript */
+  drupal_add_js('//releases.flowplayer.org/7.0.4/flowplayer.min.js', 'external');
+  /** The hlsjs plugin for playback of HLS without Flash in modern browsers */
+  drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
+  /** Audio plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
+  drupal_add_js('//releases.flowplayer.org/audio/flowplayer.audio.min.js', 'external');
+}
+
 function dlts_clip_preprocess_page(&$variables) {
+  if (path_is_admin(current_path())) return;
   header_remove('X-Frame-Options');
+  $suggestion = end($variables['theme_hook_suggestions']);
+  if ($add_js = strpos($suggestion, 'embed')) { // we add JS if the request was a "embed" request
+    $variables['theme_hook_suggestions'][] = 'page__embed';
+  }
   if (isset($variables['node'])) {
-    $arg = arg();
-    if (array_pop($arg) !== 'edit') {
-      $type = $variables['node']->type;
-      switch ($type) {
-        case 'dlts_playlist':
-        case 'dlts_clip':
-          /** Load Mobile Detect */
-          $detect = dlts_clip_mobile_detect();
-          /** Let the client know more about the browser */
-          drupal_add_js(array('dlts_clip' => array('detect' => $detect)), 'setting');
-          /** Flowplayer CSS */
-          drupal_add_css('//releases.flowplayer.org/7.0.4/skin/skin.css', 'external');
-          /** Flowplayer HTML5 audio plugin: CSS */
-          drupal_add_css('//releases.flowplayer.org/audio/flowplayer.audio.css', 'external');
-          /** Flowplayer JavaScript */
-          drupal_add_js('//releases.flowplayer.org/7.0.4/flowplayer.min.js', 'external');
-          /** The hlsjs plugin for playback of HLS without Flash in modern browsers */
-          drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
-          /** Audio plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
-          drupal_add_js('//releases.flowplayer.org/audio/flowplayer.audio.min.js', 'external');
-          break;
-      }      
+    $type = $variables['node']->type;
+    switch ($type) {
+      case 'dlts_playlist':
+      case 'dlts_clip':
+        $add_js = TRUE;
+        break;
+      default:
+        $add_js = FALSE;
     }
   }
+  if ($add_js) dlts_clip_add_js();
 }
 
 /**
@@ -708,26 +757,6 @@ function dlts_clip_field_process($element, $form_state, $complete_form) {
 
 }
 
-function dlts_embed_dlts_clip(&$vars) {
-  $ewrapper = entity_metadata_wrapper('node', $vars['node']);
-  $bitstream_ref = $ewrapper->field_bitstream_ref->value();
-  if (isset($bitstream_ref->nid)) {
-    $bitstream_wrapper = entity_metadata_wrapper('node', $bitstream_ref);
-    $configuration = array(
-      'dlts_clip' => array(
-        'media' => array(
-          $identifier => array(
-            'url' => $bitstream_wrapper->field_identifier->value(), 
-            'duration' => (int) $ewrapper->field_duration->value(), 
-            'start' => (int) $ewrapper->field_start->value(),
-          )
-        )
-      )
-    );
-    drupal_add_js($configuration, 'setting');
-  }
-}
-
 /**
  * Implements hook_entity_info_alter().
  * https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_entity_info_alter/7
@@ -745,7 +774,7 @@ function dlts_clip_entity_info_alter(&$entity_info) {
  */
 function dlts_clip_preprocess_node(&$vars) {
   if ($vars['view_mode'] == 'embed') {
-    $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__embed';
+    $vars['theme_hook_suggestions'][] = 'node__embed';
   }
 }
 
@@ -763,11 +792,29 @@ function dlts_clip_embed_display($node) {
  */
 function theme_dlts_clip_media($vars) {
 
-  $type = 'dlts_clip';
-
-  $identifier = $vars['identifier'];
+  $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : NULL;
   
-  $vars['type'] = $type;  
+  $vars['type'] = 'dlts_clip';
+
+  $m3u = (isset($vars['m3u'])) ? $vars['m3u'] : NULL;
+  
+  // HTML markup
+  $render_array = array(
+    '#type' => 'container',
+    '#attributes' => array(
+      'id' => $identifier,
+      'data-hsl' => $m3u,
+    ),
+    'span-0' => array(
+      '#theme' => 'html_tag',
+      '#tag' => 'span',
+      '#value' => '',
+      '#attributes' => array(
+        'class' => array('play'),
+        'alt' => t('Play this video')
+      ),
+    ),
+  );
 
   drupal_add_js(
     array(
@@ -776,37 +823,10 @@ function theme_dlts_clip_media($vars) {
           $identifier => $vars
       )
     )
-  ), 'setting');
-
-  $render_array = dlts_clip_video_markup($vars);
+  ), 'setting');  
 
   return drupal_render($render_array);
 
-}
-
-function dlts_clip_video_markup($vars) {
-  $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : NULL;
-  $m3u = (isset($vars['m3u'])) ? $vars['m3u'] : NULL;
-  $class = (isset($vars['type'])) ? array($vars['type']) : array();
-  // HTML markup
-  $render_array = array(
-    '#type' => 'container',
-    '#attributes' => array(
-      'id' => $identifier,
-      'data-hsl' => $m3u,
-      'class' => $class,
-    ),
-    'span-0' => array(
-      '#theme' => 'html_tag',
-      '#tag' => 'span',
-      '#value' => '',
-      '#attributes' => array(
-        'class' => array('play'),
-          'alt' => t('Play this video')
-        ),
-      ),
-  );
-  return $render_array;
 }
 
 function dlts_clip_playlist_markup($data) {
@@ -884,7 +904,15 @@ function dlts_clip_menu_alter(&$items) {
  *   Template variables.
  */
 function dlts_clip_preprocess_html(&$vars) {
+  
+  $suggestion = end($vars['theme_hook_suggestions']);
+  
+  if (strpos($suggestion, 'embed')) {
+    $vars['theme_hook_suggestions'][] = 'html__embed';
+  }
+  
   $detect = dlts_clip_mobile_detect();
+
   if ($detect['isiOS'] || $detect['isSafari']) {
     $attributes = array(
       'apple_mobile_web_app_capable' => array(
