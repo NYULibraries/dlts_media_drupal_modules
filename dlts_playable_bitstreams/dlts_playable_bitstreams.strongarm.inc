@@ -62,6 +62,141 @@ function dlts_playable_bitstreams_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'diff_additional_options_node';
+  $strongarm->value = array(
+    'title' => 'title',
+  );
+  $export['diff_additional_options_node'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_bitstream_set';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_bitstream_set'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_clip';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_clip'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_collection';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_collection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_creativework';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_creativework'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_partner';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_partner'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dlts_playlist';
+  $strongarm->value = 0;
+  $export['diff_enable_revisions_page_node_dlts_playlist'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_bitstream_set';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_bitstream_set'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_clip';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_clip'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_collection';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_collection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_creativework';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_creativework'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_partner';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_partner'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dlts_playlist';
+  $strongarm->value = 0;
+  $export['diff_show_preview_changes_node_dlts_playlist'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_bitstream_set';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_bitstream_set'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_clip';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_clip'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_collection';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_collection'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_creativework';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_creativework'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_partner';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_partner'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dlts_playlist';
+  $strongarm->value = '';
+  $export['diff_view_mode_preview_node_dlts_playlist'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__dlts_bitstream_set';
   $strongarm->value = array(
     'view_modes' => array(
@@ -230,6 +365,678 @@ function dlts_playable_bitstreams_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_author';
+  $strongarm->value = 1;
+  $export['hide_article_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_book';
+  $strongarm->value = 1;
+  $export['hide_article_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_article_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_article_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_menu';
+  $strongarm->value = 1;
+  $export['hide_article_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_metatags';
+  $strongarm->value = 1;
+  $export['hide_article_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_options';
+  $strongarm->value = 0;
+  $export['hide_article_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_panelizer';
+  $strongarm->value = 1;
+  $export['hide_article_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_path';
+  $strongarm->value = 1;
+  $export['hide_article_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_redirect';
+  $strongarm->value = 1;
+  $export['hide_article_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_revision_information';
+  $strongarm->value = 1;
+  $export['hide_article_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_article_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_article_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_bitstream_set_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_bitstream_set_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_bitstream_set_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_clip_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_clip_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_clip_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_collection_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_collection_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_collection_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_creativework_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_creativework_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_creativework_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_partner_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_partner_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_partner_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_author';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_book';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_menu';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_metatags';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_options';
+  $strongarm->value = 0;
+  $export['hide_dlts_playlist_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_panelizer';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_path';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_redirect';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_revision_information';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_dlts_playlist_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_dlts_playlist_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_author';
+  $strongarm->value = 1;
+  $export['hide_page_author'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_book';
+  $strongarm->value = 1;
+  $export['hide_page_book'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_comment_settings';
+  $strongarm->value = 1;
+  $export['hide_page_comment_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_custom_breadcrumbs';
+  $strongarm->value = 1;
+  $export['hide_page_custom_breadcrumbs'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_menu';
+  $strongarm->value = 1;
+  $export['hide_page_menu'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_metatags';
+  $strongarm->value = 1;
+  $export['hide_page_metatags'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_options';
+  $strongarm->value = 0;
+  $export['hide_page_options'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_panelizer';
+  $strongarm->value = 1;
+  $export['hide_page_panelizer'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_path';
+  $strongarm->value = 1;
+  $export['hide_page_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_redirect';
+  $strongarm->value = 1;
+  $export['hide_page_redirect'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_revision_information';
+  $strongarm->value = 1;
+  $export['hide_page_revision_information'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'hide_page_xmlsitemap';
+  $strongarm->value = 1;
+  $export['hide_page_xmlsitemap'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_dlts_bitstream_set';
   $strongarm->value = array(
     0 => 'main-menu',
@@ -322,6 +1129,137 @@ function dlts_playable_bitstreams_strongarm() {
   $strongarm->name = 'menu_parent_dlts_playlist';
   $strongarm->value = 'main-menu:0';
   $export['menu_parent_dlts_playlist'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'nodeformscols_field_placements_dlts_clip_default';
+  $strongarm->value = array(
+    'title' => array(
+      'region' => 'main',
+      'weight' => '-5',
+      'has_required' => TRUE,
+      'title' => 'Title',
+    ),
+    'additional_settings' => array(
+      'region' => 'main',
+      'weight' => '99',
+      'has_required' => FALSE,
+      'title' => 'Vertical tabs',
+      'hidden' => 0,
+    ),
+    'actions' => array(
+      'region' => 'footer',
+      'weight' => '100',
+      'has_required' => FALSE,
+      'title' => 'Save',
+      'hidden' => 0,
+    ),
+    'field_bitstream_ref' => array(
+      'region' => 'main',
+      'weight' => '2',
+      'has_required' => TRUE,
+      'title' => 'Bitstream Reference',
+    ),
+    'field_identifier' => array(
+      'region' => 'main',
+      'weight' => '1',
+      'has_required' => TRUE,
+      'title' => 'Identifier',
+    ),
+    'field_start' => array(
+      'region' => 'main',
+      'weight' => '3',
+      'has_required' => FALSE,
+      'title' => 'Play Start',
+      'hidden' => 0,
+    ),
+    'field_duration' => array(
+      'region' => 'main',
+      'weight' => '4',
+      'has_required' => FALSE,
+      'title' => 'Play Duration',
+      'hidden' => 0,
+    ),
+    'field_thumbnail' => array(
+      'region' => 'main',
+      'weight' => '5',
+      'has_required' => FALSE,
+      'title' => 'Thumbnail',
+      'hidden' => 0,
+    ),
+    'field_handle' => array(
+      'region' => 'right',
+      'weight' => '8',
+      'has_required' => FALSE,
+      'title' => 'Permanent Link',
+      'hidden' => 0,
+    ),
+    'field_collection' => array(
+      'region' => 'right',
+      'weight' => '9',
+      'has_required' => FALSE,
+      'title' => 'Collection',
+      'hidden' => 0,
+    ),
+    'field_access_control' => array(
+      'region' => 'right',
+      'weight' => '10',
+      'has_required' => FALSE,
+      'title' => 'Restricted',
+      'hidden' => 0,
+    ),
+    'comment_settings' => array(
+      'region' => 'main',
+      'weight' => '0.026',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'xmlsitemap' => array(
+      'region' => 'main',
+      'weight' => '0.027',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'metatags' => array(
+      'region' => 'main',
+      'weight' => '0.028',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'custom_breadcrumbs' => array(
+      'region' => 'main',
+      'weight' => '0.029',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'redirect' => array(
+      'region' => 'main',
+      'weight' => '0.03',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'panelizer' => array(
+      'region' => 'main',
+      'weight' => '0.031',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+    'book' => array(
+      'region' => 'main',
+      'weight' => '0.032',
+      'has_required' => FALSE,
+      'title' => NULL,
+      'hidden' => 0,
+    ),
+  );
+  $export['nodeformscols_field_placements_dlts_clip_default'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -922,6 +1860,13 @@ function dlts_playable_bitstreams_strongarm() {
     'favicon_upload' => '',
   );
   $export['theme_dlts_embed_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'vt__active_tab';
+  $strongarm->value = 'edit-hide-dlts-bitstream-set';
+  $export['vt__active_tab'] = $strongarm;
 
   return $export;
 }
