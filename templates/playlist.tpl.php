@@ -7,6 +7,8 @@
   data-start="<?php print $start ?>" 
   data-fullscreen="true"
   data-type="<?php print $type ?>"
+  data-share="<?php print $share ?>"
+  data-key="<?php print $key ?>"  
   <?php if ($type == 'audio') : ?>data-audio-only="true"<?php endif ?>
   >
  <!-- initial clip -->
