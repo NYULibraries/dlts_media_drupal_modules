@@ -11,9 +11,9 @@
         
         var parent = $(root)
         
-        var fsnext = parent.find('.fp-next')
+        var fsnext = parent.find('.fp-next').clone()
         
-        var fsprev = parent.find('.fp-prev')
+        var fsprev = parent.find('.fp-prev').clone()
         
         $('.fp-playlist a').click(function () {
           parent.attr({ 
