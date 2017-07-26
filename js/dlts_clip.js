@@ -11,9 +11,9 @@
         
         var parent = $(root)
         
-        var fsnext = parent.find('.fp-next').clone()
+        var fsnext = parent.find('.fp-next')
         
-        var fsprev = parent.find('.fp-prev').clone()
+        var fsprev = parent.find('.fp-prev')
         
         $('.fp-playlist a').click(function () {
           parent.attr({ 
@@ -30,8 +30,8 @@
         api.bind('ready', function (elem, api, media) {
           var start = $(elem.currentTarget).attr('data-start')
           var controls = parent.find('.fp-controls')
-              controls.append(fsnext)
-              controls.append(fsprev)
+              controls.clone(fsnext)
+              controls.clone(fsprev)
           if (start) {
             api.seek(start)
           }
