@@ -13,7 +13,9 @@
         
         var fsnext = root.querySelector(".fp-next");
         
-        var fsprev = root.querySelector(".fp-prev");        
+        var fsprev = root.querySelector(".fp-prev");
+        
+        var fsplaylist = root.querySelector(".fp-playlist");        
         
         $('.fp-playlist a').click(function () {
           parent.attr({ 
@@ -31,9 +33,9 @@
           var start = $(elem.currentTarget).attr('data-start')
           // https://github.com/video-dev/hls.js/blob/v0.7.8/doc/API.md
           
-          root.querySelector(".fp-controls").appendChild(fsnext);
+          root.querySelector(".fp-controls").appendChild(fsplaylist);
 
-          root.querySelector(".fp-controls").appendChild(fsprev);          
+          //root.querySelector(".fp-controls").appendChild(fsprev);          
           
           if (start) {
             api.seek(start)
