@@ -9,6 +9,12 @@
       flowplayer(function (api, root) {
         
         var parent = $(root)
+
+        var controls = parent.find('.fp-controls')
+          
+        parent.find('.fp-next').clone().appendTo(controls)
+          
+        parent.find('.fp-prev').clone().appendTo(controls)
         
         $('.fp-playlist a').click(function () {
           parent.attr({ 
@@ -23,14 +29,8 @@
         })
         
         api.bind('ready', function (elem, api, media) {
-          
+
           var start = $(elem.currentTarget).attr('data-start')
-          
-          var controls = parent.find('.fp-controls')
-          
-          parent.find('.fp-next').clone().appendTo(controls)
-          
-          parent.find('.fp-prev').clone().appendTo(controls)
               
           if (start) {
             api.seek(start)
