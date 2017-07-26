@@ -1,6 +1,5 @@
 ;(function ($) {
   function attach (context, settings) {
-    console.log(settings)
     if (window.flowplayer) {
       flowplayer.conf = {
         //key: '#$623666ca2f667514416',
@@ -24,23 +23,25 @@
         })
         
         api.bind('ready', function (elem, api, media) {
-      
+          
           var start = $(elem.currentTarget).attr('data-start')
-      
+          
           var controls = parent.find('.fp-controls')
-
-          fsnext = parent.find('.fp-next').clone().appendTo(controls)
-        
-          fsprev = parent.find('.fp-prev').clone().appendTo(controls)
+          
+          parent.find('.fp-next').clone().appendTo(controls)
+          
+          parent.find('.fp-prev').clone().appendTo(controls)
               
           if (start) {
             api.seek(start)
           }
-        })
 
+        })
         
       })
     }
   }
+  
   Drupal.behaviors.dlts_clip = { attach: attach }
+
 })(jQuery);
