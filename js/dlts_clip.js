@@ -30,7 +30,7 @@
         api.bind('ready', function (elem, api, media) {
           var start = $(elem.currentTarget).attr('data-start')
           var controls = root.querySelector(".fp-controls")
-              controls.appendChild(fsplaylist)
+              controls.appendChild(fsnext)
               controls.appendChild(fsprev)       
           if (start) {
             api.seek(start)
