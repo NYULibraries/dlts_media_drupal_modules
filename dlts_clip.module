@@ -4,7 +4,6 @@
  * Implements hook_init().
  */
 function dlts_clip_init() {
-  dpm(__FUNCTION__);
   drupal_add_http_header('Access-Control-Allow-Origin', '*');
 }
 
@@ -515,8 +514,6 @@ function dlts_clip_field_instance_settings_form($field, $instance) {
 
 function dlts_embed_node_view_dlts_clip($node) {
  
-  dpm(__FUNCTION__);
-
   $dlts_clip_wrapper = entity_metadata_wrapper('node', $node);
 
   $bitstream_wrapper = entity_metadata_wrapper('node', $dlts_clip_wrapper->field_bitstream_ref->value());  
@@ -576,15 +573,11 @@ function dlts_embed_node_view_dlts_clip($node) {
     '#markup' => theme('dlts_clip_video', $data),
   );
 
-  dpm($configuration);
-
   drupal_add_js($configuration, 'setting');
 
 }
 
 function dlts_embed_node_view_dlts_bitstream_set($node) {
-
-  dpm(__FUNCTION__);
   
   /** Wrap it with Entity API */
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -609,8 +602,6 @@ function dlts_embed_node_view_dlts_bitstream_set($node) {
     '#type' => 'markup', 
     '#markup' => theme('dlts_clip_video', $data)
   );
-
-  dpm($data);
 
   drupal_add_js(array('dlts_clip' => array('media' => array($identifier => $data))), 'setting');  
 
@@ -765,6 +756,8 @@ function dlts_clip_embed_display($node) {
  * Theme functions
  */
 function theme_dlts_clip_media($vars) {
+
+  dpm(__FUNCTION__);
 
   $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : NULL;
   

@@ -1,5 +1,8 @@
 ;(function ($) {
   function attach (context, settings) {
+    
+    console.log(settings)
+    
     if (window.flowplayer) {
       flowplayer(function (api, root) {
         var parent = $(root);
