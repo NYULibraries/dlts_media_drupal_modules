@@ -30,3 +30,8 @@
   width: 400px;
   background-color: #eee;
 }
+
+.fp-controls .fp-next, .fp-controls .fp-prev {
+  opacity: 1;
+  top: 25%;
+}
