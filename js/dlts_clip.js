@@ -3,7 +3,7 @@
     console.log(settings)
     if (window.flowplayer) {
       flowplayer.conf = {
-        key: '#$623666ca2f667514416',
+        //key: '#$623666ca2f667514416',
         //logo: "https://flowplayer.com/media/img/mylogo.png",
         share: false
       }
