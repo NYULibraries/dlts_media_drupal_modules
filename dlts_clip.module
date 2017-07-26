@@ -576,6 +576,8 @@ function dlts_embed_node_view_dlts_clip($node) {
     '#markup' => theme('dlts_clip_video', $data),
   );
 
+  dpm($configuration);
+
   drupal_add_js($configuration, 'setting');
 
 }
@@ -607,6 +609,8 @@ function dlts_embed_node_view_dlts_bitstream_set($node) {
     '#type' => 'markup', 
     '#markup' => theme('dlts_clip_video', $data)
   );
+
+  dpm($data);
 
   drupal_add_js(array('dlts_clip' => array('media' => array($identifier => $data))), 'setting');  
 
@@ -662,20 +666,13 @@ function dlts_embed_node_view_dlts_playlist($node) {
     '#type' => 'markup', 
     '#markup' => dlts_clip_playlist_markup($data),
   );
+  
+  
+  $configuration = array('dlts_clip' => array('playlists' => array($playlist_identifier => $references), 'media' => $data['stream']));
 
-  drupal_add_js(
-    array(
-      'dlts_clip' => 
-        array(
-          'playlists' => 
-            array(
-              $playlist_identifier => $references
-            ), 
-            'media' => $data['stream']
-          )
-        ), 
-        'setting'
-  );  
+  dpm($configuration);
+
+  drupal_add_js($configuration, 'setting');
 
 }
 
@@ -792,15 +789,12 @@ function theme_dlts_clip_media($vars) {
       ),
     ),
   );
+  
+  $configuration = array('dlts_clip' => array('media' => array($identifier => $vars)));
+  
+  dpm($configuration);
 
-  drupal_add_js(
-    array(
-      'dlts_clip' => array(
-        'media' => array(
-          $identifier => $vars
-      )
-    )
-  ), 'setting');  
+  drupal_add_js($configuration, 'setting');
 
   return drupal_render($render_array);
 
