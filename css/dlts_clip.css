@@ -37,13 +37,13 @@
 }
 
 .fp-controls .fp-next {
-  left: 4em;
-  top: .85em;
-  font-size: 70%;
+  left: 4em !important;
+  top: .85em !important;
+  font-size: 70% !important;
 }
 
 .fp-controls .fp-next {
-  left: 2.3em;
-  top: .85em;
-  font-size: 70%;
+  left: 2.3em !important;
+  top: .85em !important;
+  font-size: 70% !important;
 }
