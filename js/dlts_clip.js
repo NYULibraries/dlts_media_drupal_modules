@@ -1,9 +1,12 @@
 ;(function ($) {
   function attach (context, settings) {
-    
     console.log(settings)
-    
     if (window.flowplayer) {
+      flowplayer.conf = {
+        key: '#$623666ca2f667514416',
+        //logo: "https://flowplayer.com/media/img/mylogo.png",
+        share: false
+      }
       flowplayer(function (api, root) {
         var parent = $(root);
         $('.fp-playlist a').click(function () {

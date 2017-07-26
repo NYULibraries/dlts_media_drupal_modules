@@ -609,8 +609,6 @@ function dlts_embed_node_view_dlts_bitstream_set($node) {
 
 function dlts_embed_node_view_dlts_playlist($node) {
   
-  dpm(__FUNCTION__);
-  
   $references = array();
 
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -660,8 +658,6 @@ function dlts_embed_node_view_dlts_playlist($node) {
   
   
   $configuration = array('dlts_clip' => array('playlists' => array($playlist_identifier => $references), 'media' => $data['stream']));
-
-  dpm($configuration);
 
   drupal_add_js($configuration, 'setting');
 
@@ -757,8 +753,6 @@ function dlts_clip_embed_display($node) {
  */
 function theme_dlts_clip_media($vars) {
 
-  dpm(__FUNCTION__);
-
   $identifier = (isset($vars['identifier'])) ? $vars['identifier'] : NULL;
   
   $vars['type'] = 'dlts_clip';
@@ -785,8 +779,6 @@ function theme_dlts_clip_media($vars) {
   
   $configuration = array('dlts_clip' => array('media' => array($identifier => $vars)));
   
-  dpm($configuration);
-
   drupal_add_js($configuration, 'setting');
 
   return drupal_render($render_array);
@@ -1076,9 +1068,7 @@ function dlts_clip_default_flowplayer_configuration () {
       'scaling' => 'fit',
     ),
   );
-
   return $default;
-
 }
 
 function dlts_clip_add_js() {
@@ -1097,4 +1087,9 @@ function dlts_clip_add_js() {
   drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
   /** Audio plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
   drupal_add_js('//releases.flowplayer.org/audio/flowplayer.audio.min.js', 'external');
+
+  /** Thumbnails plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
+  /** Nice to have thumbnails @ https://flowplayer.com/docs/plugins.html#thumbnails */
+  // drupal_add_js('//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js', 'external');  
+  
 }
