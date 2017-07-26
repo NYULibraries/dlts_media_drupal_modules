@@ -36,13 +36,13 @@
   top: 25%;
 }
 
-.fp-controls .fp-next {
+.node .flowplayer .fp-player .fp-controls .fp-next {
   left: 4em !important;
   top: .85em !important;
   font-size: 70% !important;
 }
 
-.fp-controls .fp-next {
+.node .flowplayer .fp-player .fp-controls .fp-next {
   left: 2.3em !important;
   top: .85em !important;
   font-size: 70% !important;
