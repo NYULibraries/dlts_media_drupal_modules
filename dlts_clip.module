@@ -1092,4 +1092,6 @@ function dlts_clip_add_js() {
   /** Nice to have thumbnails @ https://flowplayer.com/docs/plugins.html#thumbnails */
   // drupal_add_js('//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js', 'external');  
   
+  drupal_add_js('//releases.flowplayer.org/speed-menu/flowplayer.speed-menu.min.js', 'external');  
+  
 }
