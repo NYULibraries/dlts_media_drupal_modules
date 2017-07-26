@@ -35,3 +35,15 @@
   opacity: 1;
   top: 25%;
 }
+
+.flowplayer.fp-default-playlist .fp-next {
+  left: 4em;
+  top: .85em;
+  font-size: 70%;
+}
+
+.flowplayer.fp-default-playlist .fp-next {
+  left: 2.3em;
+  top: .85em;
+  font-size: 70%;
+}
