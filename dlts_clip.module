@@ -1087,11 +1087,8 @@ function dlts_clip_add_js() {
   drupal_add_js('//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js', 'external');
   /** Audio plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
   drupal_add_js('//releases.flowplayer.org/audio/flowplayer.audio.min.js', 'external');
-
   /** Thumbnails plugin for Flowplayer HTML5 : Requires Flowplayer HTML5 version 6.x or greater */
   /** Nice to have thumbnails @ https://flowplayer.com/docs/plugins.html#thumbnails */
   // drupal_add_js('//releases.flowplayer.org/thumbnails/flowplayer.thumbnails.min.js', 'external');  
-  
-  drupal_add_js('//releases.flowplayer.org/speed-menu/flowplayer.speed-menu.min.js', 'external');  
-  
+  // drupal_add_js('//releases.flowplayer.org/speed-menu/flowplayer.speed-menu.min.js', 'external');  
 }
