@@ -9,13 +9,11 @@
       }
       flowplayer(function (api, root) {
         
-        var parent = $(root);
+        var parent = $(root)
         
-        var fsnext = root.querySelector(".fp-next");
+        var fsnext = parent.find('.fp-next')
         
-        var fsprev = root.querySelector(".fp-prev");
-        
-        var fsplaylist = root.querySelector(".fp-playlist");        
+        var fsprev = parent.find('.fp-prev')
         
         $('.fp-playlist a').click(function () {
           parent.attr({ 
@@ -31,12 +29,9 @@
         
         api.bind('ready', function (elem, api, media) {
           var start = $(elem.currentTarget).attr('data-start')
-          // https://github.com/video-dev/hls.js/blob/v0.7.8/doc/API.md
-          
-          root.querySelector(".fp-controls").appendChild(fsplaylist);
-
-          //root.querySelector(".fp-controls").appendChild(fsprev);          
-          
+          var controls = root.querySelector(".fp-controls")
+              controls.appendChild(fsplaylist)
+              controls.appendChild(fsprev)       
           if (start) {
             api.seek(start)
           }
