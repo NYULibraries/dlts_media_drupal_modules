@@ -4,6 +4,7 @@
  * Implements hook_init().
  */
 function dlts_clip_init() {
+  dpm(__FUNCTION__);
   drupal_add_http_header('Access-Control-Allow-Origin', '*');
 }
 
