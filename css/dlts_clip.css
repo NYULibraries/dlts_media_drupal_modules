@@ -8,7 +8,9 @@
   background-size: 100%;
 }
 
-.dlts_media .play, .dlts_playlist .play, .dlts_clip .play { 
+.dlts_media .play, 
+.dlts_playlist .play, 
+.dlts_clip .play { 
   background-image: url('../images/play_large.png') ;
   width: 83px;
   height: 83px;
@@ -25,25 +27,22 @@
   cursor: pointer;
 }
 
-/* icecast player */
-#icecast {
-  width: 400px;
-  background-color: #eee;
+.dlts_playlist.flowplayer.fp-default-playlist .fp-controls .fp-elapsed {
+  margin-left: 2.3em;
 }
 
-.fp-controls .fp-next, .fp-controls .fp-prev {
+.dlts_playlist.flowplayer.fp-default-playlist .fp-controls .fp-next {
   opacity: 1;
-  top: 25%;
+  font-size: 62%;
+  top: .95em;
+  right: initial;
+  left: 5em;
 }
 
-.node .flowplayer .fp-player .fp-controls .fp-next {
-  left: 4em !important;
-  top: .85em !important;
-  font-size: 70% !important;
-}
-
-.node .flowplayer .fp-player .fp-controls .fp-next {
-  left: 2.3em !important;
-  top: .85em !important;
-  font-size: 70% !important;
+.dlts_playlist.flowplayer.fp-default-playlist .fp-controls .fp-prev {
+  opacity: 1;
+  font-size: 62%;
+  top: .95em;
+  right: initial;
+  left: 3.2em;
 }
