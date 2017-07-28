@@ -552,7 +552,7 @@ function dlts_embed_node_view_dlts_clip($node) {
     'style' => '',
     'links' => '',
     'classes' => array(),
-    'key' => variable_get('playerkey', '#$623666ca2f667514416'),
+    'key' => '$376358022683907',
     'share' => variable_get('playershare', 'false'),
   );
 
@@ -594,7 +594,7 @@ function dlts_embed_node_view_dlts_bitstream_set($node) {
 
   $data['poster'] = NULL;
 
-  $data['key'] = variable_get('playerkey', '#$623666ca2f667514416');
+  $data['key'] = '$376358022683907';
 
   $data['share'] = variable_get('playershare', 'false');
 
@@ -836,7 +836,7 @@ function dlts_clip_playlist_markup($data) {
     'm3u' => $first_stream_m3u,
     'links' => $links,
     'poster' => $poster,
-    'key' => variable_get('playerkey', '#$623666ca2f667514416'),
+    'key' => '$376358022683907',
     'share' => variable_get('playershare', 'false'),
   );
 
