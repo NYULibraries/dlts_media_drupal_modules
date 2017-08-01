@@ -1,0 +1,13 @@
+# Ignore configuration files that may contain sensitive information.
+
+.sass-cache
+.vscode/
+.project
+
+# Ignore Intellij/PHPStorm/WebStorm files
+*.iml
+
+# Ignore editor backup files
+*~
+*#
+#*
